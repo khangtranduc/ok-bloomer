@@ -24,7 +24,7 @@
     </button>
 </div>
 
-<style>
+<style lang="scss">
     img {
         width: 100vw;
         height: 100vh;
@@ -47,16 +47,19 @@
         transform: translate(-50%, -50%);
     }
 
-    div h1 {
-        text-align: center;
-        margin-bottom: 1%;
-        font-size: 5rem;
-        -webkit-text-stroke: 0.1rem;
-        -webkit-text-stroke-color: white;
-    }
+    div {
+        h1 {
+            @include text($size: 5rem, $stroke: 0.1rem, $stroke-color: white);
+            margin-bottom: 1%;
+        }
+        
+        p {
+            @include text($color: white, $size: 1.2rem, $weight: bold, $stroke: 0.03rem, $stroke-color: white);
+        }
+    } 
     
     .gradient {
-        background: linear-gradient(0.25turn, var(--primary), var(--primary-hover));
+        background: linear-gradient(to right, $primary-500, $primary-700);
         background-clip: text;
         color: transparent;
     }
@@ -68,27 +71,12 @@
     button {
         display: flex;
         align-items: center;
-        background: linear-gradient(0.25turn, var(--primary), var(--primary-hover));
+        background: linear-gradient(to right, $primary-500, $primary-700);
         justify-content: center;
         gap: 3%;
+        border: none;
+        &:hover {
+            background: linear-gradient(to right, #878787, #6e6e6e);
+        }
     }
-
-    button:hover {
-        display: flex;
-        align-items: center;
-        filter: contrast(70%);
-        justify-content: center;
-        gap: 3%;   
-    }
-
-    div p {
-        text-align: center;
-        color: white; 
-        font-weight: bold;
-        font-size: 1.2rem;
-        -webkit-text-stroke: 0.03rem;
-        -webkit-text-stroke-color: white;
-    }
-
-
 </style>
