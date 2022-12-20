@@ -9,7 +9,8 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "eslint .",
-    "surge": "surge D:/CS/Projects/Web/Svelte/james-bong-pico/docs jamesbong-pico.surge.sh"
+    "surge": "surge D:/CS/Projects/Web/Svelte/james-bong-pico/docs jamesbong-pico.surge.sh",
+    "push": "npm run build && npm run surge"
   },
   "devDependencies": {
     "@sveltejs/kit": "^1.0.0",
