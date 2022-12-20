@@ -2,6 +2,10 @@
   import "@picocss/pico/scss/pico.scss";
   import "iconify-icon";
   import Darkmode from "./darkmode.svelte";
+  import { goto } from "$app/navigation";
+
+  let query = '';
+  $: url = '/search/' + query;
 </script>
 
 <nav class="container-fluid">
@@ -16,13 +20,21 @@
   </ul>
   <ul>
     <li>
-      <form>
-        <input type="search" id="search" name="search" placeholder="Search">
-        <button>
-          <span class="gradient">Go</span>
+      <form on:submit|preventDefault={() => goto(url)}>
+        <input bind:value={query} type="search" id="search" name="search" placeholder="Search">
+        <button type="submit">
+          <span>Go</span>
         </button>
       </form>
     </li>
+    <li><a role="button" href="/login">
+      <iconify-icon icon="lucide:user"/>
+      Login
+    </a></li>
+    <li><a role="button" href="/register">
+      <iconify-icon icon="lucide:user-plus"/>
+      Register
+    </a></li>
     <li style="padding: 0 1rem 0 1rem;"><Darkmode/></li>
   </ul>
 </nav>

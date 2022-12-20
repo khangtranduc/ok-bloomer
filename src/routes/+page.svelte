@@ -27,7 +27,7 @@
 <style lang="scss">
     img {
         width: 100vw;
-        height: 100vh;
+        height: 89vh;
         object-fit: cover;
         filter: blur(5px);
     }
