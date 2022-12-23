@@ -1,5 +1,9 @@
+<script>
+    import {dark} from '$store';
+</script>
+
 <div>
-    <article class="container">
+    <article class="container" class:dark-card={$dark}>
         <h1>Register</h1>
         <hr>
         <div class="grid">

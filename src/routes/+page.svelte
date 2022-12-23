@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { dark } from "./store.js";
+    import { dark } from "$store";
+    import { goto } from "$app/navigation";
 
     $: gray = $dark;
 
@@ -18,7 +19,7 @@
 <div class="title">
     <h1 class:gray-txt={gray} class="gradient">James Bong</h1>
     <p>Your one stop shop for everything <span class:gray-txt={gray} class="gradient">weed</span></p>
-    <button class:gray-txt={gray}>
+    <button on:click={() => goto('/search')}>
         <span>Explore our catalogs</span>
         <iconify-icon icon="lucide:arrow-right" width="25"/>
     </button>
@@ -59,9 +60,7 @@
     } 
     
     .gradient {
-        background: linear-gradient(to right, $primary-500, $primary-700);
-        background-clip: text;
-        color: transparent;
+        @include gradient()
     }
 
     .border {
@@ -75,7 +74,10 @@
         justify-content: center;
         gap: 3%;
         border: none;
+        transition: .3s;
         &:hover {
+            transition: .3s;
+            transform: scale(1.1);
             background: linear-gradient(to right, #878787, #6e6e6e);
         }
     }

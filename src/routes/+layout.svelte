@@ -9,7 +9,7 @@
 </script>
 
 <nav class="container-fluid">
-  <ul>
+  <ul on:click={() => goto("/")} on:keydown>
     <li><img src="/logo.jpg" alt="" class="logo"/></li>
     <li><strong>James Bong</strong></li>
   </ul>
@@ -42,6 +42,13 @@
 <slot />
 
 <style lang="scss">
+  ul:first-child {
+    transition: .3s;
+    &:hover {
+      transition: .3s;
+      transform: scale(1.1);
+    }
+  }
   .logo {
     width: 2rem;
     height: 2rem;

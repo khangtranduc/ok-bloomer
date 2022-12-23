@@ -7,7 +7,7 @@
 		<script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
 		<meta http-equiv="content-security-policy" content="">
 		<link href="./_app/immutable/assets/_layout-4c41ab55.css" rel="stylesheet">
-		<link href="./_app/immutable/assets/_page-9a498496.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/_page-454790dc.css" rel="stylesheet">
 		<link rel="modulepreload" href="./_app/immutable/start-e79ae6eb.js">
 		<link rel="modulepreload" href="./_app/immutable/chunks/index-2d187d0f.js">
 		<link rel="modulepreload" href="./_app/immutable/chunks/singletons-fea35397.js">
@@ -17,7 +17,7 @@
 		<link rel="modulepreload" href="./_app/immutable/chunks/navigation-96a2e2de.js">
 		<link rel="modulepreload" href="./_app/immutable/modules/pages/_layout.ts-9cbb603b.js">
 		<link rel="modulepreload" href="./_app/immutable/chunks/_layout-da46b06b.js">
-		<link rel="modulepreload" href="./_app/immutable/components/pages/contact/_page.svelte-9aa63cba.js">
+		<link rel="modulepreload" href="./_app/immutable/components/pages/register/_page.svelte-57c50331.js">
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">
@@ -39,31 +39,36 @@
     <li style="padding: 0 1rem 0 1rem;"><div class="svelte-1vntsu5"><iconify-icon icon="lucide:moon"></iconify-icon>
 </div></li></ul></nav>
 
-<div class="svelte-118nsq4"><article class="container svelte-118nsq4"><h1 class="svelte-118nsq4">Contact Us</h1>
-        <p class="svelte-118nsq4"><em>Leave us any feedback in the form below!</em></p>
+<div class="svelte-3taf7x"><article class="container svelte-3taf7x"><h1 class="svelte-3taf7x">Register</h1>
         <hr>
-        <label for="fruit">Query</label>
-        <select id="fruit" required><option value="" selected>Select a query…</option><option value="…">…</option></select>
-        <label for="name">Name
-            <input type="text" id="name" name="name" placeholder="John Doe" required></label>
+        <div class="grid svelte-3taf7x"><label for="firstname">Firstname
+            <input type="text" id="firstname" name="firstname" placeholder="John" required></label>
+        <label for="lastname">Lastname
+            <input type="text" id="lastname" name="lastname" placeholder="Doe" required></label></div>
         <label for="email">Email
             <input type="text" id="email" name="email" placeholder="elonmusk@gay.com" required></label>
-        <hr>
-        <textarea id="comment" name="comment" rows="3" cols="50" placeholder="Type your comment here..." class="svelte-118nsq4"></textarea>
-        <button type="submit">Submit</button></article>
+        <label for="password">Password
+            <p class="svelte-3taf7x"><em>Must have at least 6 characters</em></p>
+            <input type="password" id="pwd" name="pwd" placeholder="••••••••" required></label>
+        <label for="conpassword">Confirm Password
+            <input type="password" id="cpwd" name="cpwd" placeholder="••••••••" required></label>
+        <fieldset><label for="terms"><input type="checkbox" id="terms" name="terms">
+              I agree to the Terms and Conditions
+            </label></fieldset>
+        <button type="submit">Register</button></article>
 </div>
 
 
-		<script type="module" data-sveltekit-hydrate="evno67">
+		<script type="module" data-sveltekit-hydrate="109021q">
 			import { start } from "./_app/immutable/start-e79ae6eb.js";
 
 			start({
 				env: {},
 				paths: {"base":"","assets":""},
-				target: document.querySelector('[data-sveltekit-hydrate="evno67"]').parentNode,
+				target: document.querySelector('[data-sveltekit-hydrate="109021q"]').parentNode,
 				version: "1671776458881",
 				hydrate: {
-					node_ids: [0, 4],
+					node_ids: [0, 6],
 					data: [null,null],
 					form: null
 				}

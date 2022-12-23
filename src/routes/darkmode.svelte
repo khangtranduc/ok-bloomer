@@ -1,7 +1,7 @@
 <script lang="ts">
     import { dark } from "./store.js";
 
-    $: icon = dark ? "sun" : "moon";
+    $: icon = $dark ? "sun" : "moon";
 
     const toggle = () => {
         $dark = !$dark;
@@ -17,6 +17,7 @@
 
 <style>
     div {
+        transition: .5s;
         display: flex;
         justify-content: center;
         align-items: center;

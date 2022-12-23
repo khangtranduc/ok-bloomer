@@ -1,6 +1,10 @@
+<script>
+    import {dark} from '$store';
+</script>
+
 
 <div>
-    <article class="container">
+    <article class="container" class:dark-card={$dark}>
         <h1>Contact Us</h1>
         <p><em>Leave us any feedback in the form below!</em></p>
         <hr>

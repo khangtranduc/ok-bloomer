@@ -1,4 +1,5 @@
 /* Variables and mixins declared here will be available in all other SCSS files */
+$primary-300: #99ff99;
 $primary-500: #8bc34a;
 $primary-600: #7cb342;
 $primary-700: #689f38;
@@ -10,4 +11,14 @@ $primary-700: #689f38;
     font-size: $size;
     -webkit-text-stroke: $stroke;
     -webkit-text-stroke-color: $stroke-color;
+}
+
+@mixin gradient($from: $primary-500, $to: $primary-700) {
+    background: linear-gradient(to right, $from, $to);
+    background-clip: text;
+    color: transparent;
+}
+
+.dark-card {
+    background-color: rgb(42, 42, 42);
 }
