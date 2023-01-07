@@ -1,6 +1,6 @@
 # James Bong - a Weed Distribution Service
 
-The front-end is hosted [here](http://jamesbong.surge.sh/).<br>
+The front-end is hosted <a href="http://jamesbong.surge.sh/" target="_blank">here</a>.<br>
 Alternatively, to deploy the project locally, run `npm run dev -- --open`
 
 Here are some screenshots of the website:
