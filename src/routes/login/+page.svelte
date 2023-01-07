@@ -25,7 +25,7 @@
 
 <style lang="scss">
     div {
-        height: 89vh;
+        height: 100%;
         width: 100vw;
         display: flex;
         justify-items: center;

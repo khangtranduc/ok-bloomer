@@ -15,7 +15,7 @@ $primary-700: #689f38;
 
 @mixin gradient($from: $primary-500, $to: $primary-700) {
     background: linear-gradient(to right, $from, $to);
-    background-clip: text;
+    -webkit-background-clip: text;
     color: transparent;
 }
 
