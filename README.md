@@ -8,6 +8,7 @@ Here are some screenshots of the website:
 Light Mode             |  Dark Mode
 :-------------------------:|:-------------------------:
 ![](imgs/landing-l.png)  |  ![](imgs/landing-d.png)
+
 The splashes cycles through different images.
 Dark mode turns the images gray scale.
 The gradient text might not render properly in some browsers
