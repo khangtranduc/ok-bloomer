@@ -4,6 +4,16 @@ $primary-500: #8bc34a;
 $primary-600: #7cb342;
 $primary-700: #689f38;
 
+$min-points: (
+    sm: 360px,
+    md: 800px
+);
+
+$max-points: (
+    sm: 799px,
+    md: 1000px
+);
+
 @mixin text($color: black, $size: 1rem, $align: center, $weight: none, $stroke: 0, $stroke-color: black){
     text-align: $align;
     color: $color;
@@ -17,6 +27,14 @@ $primary-700: #689f38;
     background: linear-gradient(to right, $from, $to);
     -webkit-background-clip: text;
     color: transparent;
+}
+
+@mixin media($keys...){
+    @each $key in $keys { 
+      @media (min-width: map-get($min-points, $key)) and (max-width: map-get($max-points, $key)){
+        @content
+      } 
+    }
 }
 
 .dark-card {

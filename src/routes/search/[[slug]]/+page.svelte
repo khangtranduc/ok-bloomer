@@ -49,6 +49,9 @@
         justify-content: start;
         gap: .3rem;
         row-gap: .8rem;
+        @include media(sm) {
+            align-items: center;
+        }
     }
     .container {
         padding: .5rem;
@@ -64,9 +67,15 @@
     }
     article {
         margin: 0;
-        width: 13rem;
+        width: calc(100vw/6 - .6rem);
         padding: 0;
         transition: .3s;
+        @include media(sm) {
+            width: 92vw;
+        }
+        @include media(md) {
+            width: calc(100vw/3 - .8rem);
+        }
         &:hover {
             transform: scale(1.1);
             transition: .3s;

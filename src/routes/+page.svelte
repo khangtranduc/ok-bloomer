@@ -27,10 +27,13 @@
 
 <style lang="scss">
     img {
-        width: 100vw;
+        width: 100%;
         height: 89vh;
         object-fit: cover;
         filter: blur(5px);
+        @include media(sm, md) {
+            height: 92vh;
+        }
     }
 
     .gray {
@@ -52,8 +55,12 @@
         h1 {
             @include text($size: 5rem, $stroke: 0.1rem, $stroke-color: white);
             margin-bottom: 1%;
+            @include media(sm){
+                font-size: 3rem;
+                width: 90vw;
+            }
         }
-        
+
         p {
             @include text($color: white, $size: 1.2rem, $weight: bold, $stroke: 0.03rem, $stroke-color: white);
         }

@@ -34,3 +34,14 @@ Light Mode             |  Dark Mode
 Light Mode             |  Dark Mode
 :-------------------------:|:-------------------------:
 ![](imgs/search-l.png)  |  ![](imgs/search-d.png)
+
+There is also support for mobile devices:
+### Tablet
+Truncated Nav Bar             |  Hamburger Menu | Search List Resized  
+:-------------------------:|:-------------------------: | :-------------: |
+![](imgs/ipad-splash.png)  |  ![](imgs/ipad-hamburg.png) | ![](imgs/ipad-search.png)
+
+### Phone
+Truncated Nav Bar             |  Hamburger Menu | Search List Resized  
+:-------------------------:|:-------------------------: | :-------------: |
+![](imgs/se-splash.png)  |  ![](imgs/se-hamburg.png) | ![](imgs/se-search.png)
