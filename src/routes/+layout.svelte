@@ -64,21 +64,21 @@
         transform: scale(1.1);
       }
       li:last-child {
-        @include media(sm, md) {
+        @include media(lg, md) {
           display: none;
         }
       }
     }
     
     &:nth-child(2){
-      @include media(sm, md){
+      @include media(lg, md){
         display: none;
       }
     }
 
     &:last-child{
       display: none;
-      @include media(sm, md){
+      @include media(lg, md){
         display: grid;
         margin-right: .3rem;
       }
@@ -87,14 +87,14 @@
     &:nth-child(3) {
       li {
         &:first-child {
-          @include media(sm, md){
+          @include media(lg, md){
             display: none;
           }
         }
 
         &:nth-child(2), :last-child{
           iconify-icon {
-            @include media(sm, md){
+            @include media(lg, md){
               display: none
             }
           }
@@ -122,7 +122,7 @@
   }
 
   .isOpen {
-    @include media(sm, md){
+    @include media(lg, md){
       display: flex;
       flex-direction: column;
       align-items: center;

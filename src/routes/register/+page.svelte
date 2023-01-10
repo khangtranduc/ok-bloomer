@@ -1,9 +1,5 @@
-<script>
-    import {dark} from '$store';
-</script>
-
 <div>
-    <article class="container" class:dark-card={$dark}>
+    <article class="container">
         <h1>Register</h1>
         <hr>
         <div class="grid">
@@ -64,6 +60,7 @@
         text-align: center;
     }
     article {
+        background-color: $card-bg;
         width: fit-content;
         height: fit-content;
         padding: 1rem 2rem 1rem 2rem;

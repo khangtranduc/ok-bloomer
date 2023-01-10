@@ -1,6 +1,5 @@
 <script lang="ts">
     import type { PageData } from './$types';
-    import {dark} from '$store';
     import Star from './star.svelte';
   
     export let data: PageData;
@@ -29,7 +28,7 @@
     {/if}
     <div class="flex">
         {#each items as x}
-        <article class:dark-card={$dark}>
+        <article>
             <img alt="" src={x.src}/>
             <div class="container">
                 <h4>{x.name}</h4>
@@ -49,7 +48,8 @@
         justify-content: start;
         gap: .3rem;
         row-gap: .8rem;
-        @include media(sm) {
+        
+        @include media(md) {
             align-items: center;
         }
     }
@@ -66,16 +66,20 @@
         }
     }
     article {
+        background-color: $card-bg;
         margin: 0;
         width: calc(100vw/6 - .6rem);
         padding: 0;
         transition: .3s;
-        @include media(sm) {
-            width: 92vw;
-        }
-        @include media(md) {
+        
+        @include media(lg) {
             width: calc(100vw/3 - .8rem);
         }
+
+        @include media(md) {
+            width: 92vw;
+        }
+        
         &:hover {
             transform: scale(1.1);
             transition: .3s;

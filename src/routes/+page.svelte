@@ -1,24 +1,15 @@
 <script lang="ts">
-    import { dark } from "$store";
     import { goto } from "$app/navigation";
 
-    $: gray = $dark;
-
-    const images = [
-        "/splashes/snoop-dogg-puffing.jpg",
-        "/splashes/person-smoking-marijuana-pipe.jpg"
-    ];
-
     let curr = 0;
-
-    setInterval(() => curr = (curr + 1) % images.length, 3000)
+    setInterval(() => curr = (curr + 1) % 6, 3000)
 </script>
 
-<img class:gray src={images[curr]} alt=""/>
+<img src="splashes/weed-{curr + 1}.jpg" alt=""/> 
 
 <div class="title">
-    <h1 class:gray-txt={gray} class="gradient">James Bong</h1>
-    <p>Your one stop shop for everything <span class:gray-txt={gray} class="gradient">weed</span></p>
+    <h1 class="gradient">James Bong</h1>
+    <p>Your one stop shop for everything <span class="gradient">weed</span></p>
     <button on:click={() => goto('/search')}>
         <span>Explore our catalogs</span>
         <iconify-icon icon="lucide:arrow-right" width="25"/>
@@ -30,18 +21,10 @@
         width: 100%;
         height: 89vh;
         object-fit: cover;
-        filter: blur(5px);
-        @include media(sm, md) {
+        filter: $filter-img;
+        @include media(lg, md) {
             height: 92vh;
         }
-    }
-
-    .gray {
-        filter: blur(5px) grayscale(100%);
-    }
-
-    .gray-txt {
-        filter: grayscale(100%);
     }
 
     .title {
@@ -55,7 +38,7 @@
         h1 {
             @include text($size: 5rem, $stroke: 0.1rem, $stroke-color: white);
             margin-bottom: 1%;
-            @include media(sm){
+            @include media(md){
                 font-size: 3rem;
                 width: 90vw;
             }
@@ -67,11 +50,8 @@
     } 
     
     .gradient {
-        @include gradient()
-    }
-
-    .border {
-        border: solid;
+        @include gradient();
+        filter: $filter-text;
     }
 
     button {

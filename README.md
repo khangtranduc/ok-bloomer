@@ -35,13 +35,18 @@ Light Mode             |  Dark Mode
 :-------------------------:|:-------------------------:
 ![](imgs/search-l.png)  |  ![](imgs/search-d.png)
 
+#### About Page:
+Light Mode             |  Dark Mode
+:-------------------------:|:-------------------------:
+![](imgs/about-l.png)  |  ![](imgs/about-d.png)
+
 There is also support for mobile devices:
 ### Tablet
-Truncated Nav Bar             |  Hamburger Menu | Search List Resized  
-:-------------------------:|:-------------------------: | :-------------: |
-![](imgs/ipad-splash.png)  |  ![](imgs/ipad-hamburg.png) | ![](imgs/ipad-search.png)
+Truncated Nav Bar             |  Hamburger Menu | Search List Resized  | About Page
+:-------------------------:|:-------------------------: | :-------------: | :--------------------: |
+![](imgs/ipad-splash.png)  |  ![](imgs/ipad-hamburg.png) | ![](imgs/ipad-search.png) | ![](imgs/ipad-about.png)
 
 ### Phone
-Truncated Nav Bar             |  Hamburger Menu | Search List Resized  
-:-------------------------:|:-------------------------: | :-------------: |
-![](imgs/se-splash.png)  |  ![](imgs/se-hamburg.png) | ![](imgs/se-search.png)
+Truncated Nav Bar             |  Hamburger Menu | Search List Resized   | About Page
+:-------------------------:|:-------------------------: | :-------------: | :-----------------: |
+![](imgs/se-splash.png)  |  ![](imgs/se-hamburg.png) | ![](imgs/se-search.png) | ![](imgs/se-about.png)

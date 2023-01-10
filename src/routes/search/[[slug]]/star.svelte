@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { dark } from "$store";
     export let stars: number;
 </script>
 
@@ -11,16 +10,13 @@
     {#if stars > Math.floor(stars)}
         <iconify-icon icon="lucide:star-half"/>
     {/if}
-    <span class:dark={$dark}>{stars}</span>
+    <span>{stars}</span>
 </div>
 
 
 <style lang="scss">
-    .dark {
-        background-color: $primary-700;
-    }
     span {
-        background-color: $primary-300;
+        background-color: $star-col;
         padding: 0 .3rem 0 .3rem;
         margin-left: .2rem;
         border-radius: 30%;

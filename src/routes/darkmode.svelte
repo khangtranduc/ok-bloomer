@@ -1,13 +1,22 @@
 <script lang="ts">
-    import { dark } from "./store.js";
+    import { onMount } from "svelte";
+    let doc: HTMLElement;
 
-    $: icon = $dark ? "sun" : "moon";
+    onMount(() => {
+        doc = document.documentElement;
+    });
+
+    let icon = "moon";
 
     const toggle = () => {
-        $dark = !$dark;
-        $dark
-            ? document.documentElement.setAttribute("data-theme", "dark")
-            : document.documentElement.setAttribute("data-theme", "light");
+        if (doc.getAttribute("data-theme") === "dark") {
+            doc.setAttribute("data-theme", "light");
+            icon = "moon";
+        }
+        else {
+            doc.setAttribute("data-theme", "dark");
+            icon = "sun";
+        }
     }
 </script>
 

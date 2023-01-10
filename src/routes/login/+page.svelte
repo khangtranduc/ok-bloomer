@@ -1,11 +1,5 @@
-<script>
-    import {dark} from '$store';
-
-</script>
-
-
 <div>
-    <article class="container" class:dark-card={$dark}>
+    <article class="container">
         <h1>Login</h1>
         <hr>
         <label for="email">
@@ -41,6 +35,7 @@
         text-align: center;
     }
     article {
+        background-color: $card-bg;
         width: fit-content;
         height: fit-content;
         padding: 1rem;

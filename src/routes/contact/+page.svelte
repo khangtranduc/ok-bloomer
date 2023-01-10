@@ -1,10 +1,6 @@
-<script>
-    import {dark} from '$store';
-</script>
-
 
 <div>
-    <article class="container" class:dark-card={$dark}>
+    <article class="container">
         <h1>Contact Us</h1>
         <p><em>Leave us any feedback in the form below!</em></p>
         <hr>
@@ -26,8 +22,6 @@
         <button type="submit">Submit</button>
     </article>
 </div>
-
-
 
 <style lang="scss">
     p {
@@ -53,6 +47,7 @@
         text-align: center;
     }
     article {
+        background-color: $card-bg;
         width: fit-content;
         height: fit-content;
         padding: 1rem;
