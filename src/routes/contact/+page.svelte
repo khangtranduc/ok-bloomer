@@ -15,7 +15,7 @@
         </label>
         <label for="email">
             Email
-            <input type="text" id="email" name="email" placeholder="elonmusk@gay.com" required>
+            <input type="text" id="email" name="email" placeholder="elonmusk@gmail.com" required>
         </label>
         <hr>
         <textarea id="comment" name="comment" rows="3" cols="50" placeholder="Type your comment here..."/>

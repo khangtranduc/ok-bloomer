@@ -8,8 +8,8 @@
 <img src="splashes/weed-{curr + 1}.jpg" alt=""/> 
 
 <div class="title">
-    <h1 class="gradient">James Bong</h1>
-    <p>Your one stop shop for everything <span class="gradient">weed</span></p>
+    <h1 class="gradient">OK, Bloomer!</h1>
+    <p>Your one stop shop for everything <span class="gradient">botany</span></p>
     <button on:click={() => goto('/search')}>
         <span>Explore our catalogs</span>
         <iconify-icon icon="lucide:arrow-right" width="25"/>

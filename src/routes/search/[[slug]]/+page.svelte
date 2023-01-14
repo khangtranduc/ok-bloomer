@@ -5,18 +5,17 @@
     export let data: PageData;
 
     let items = [
-        {name: "Blue Dream Cannabis", src: "/strains/blue-dream.jpg", price: 420, ratings: 4.2},
-        {name: "Blue Dream Cannabis", src: "/strains/blue-dream.jpg", price: 420, ratings: 4.2},
-        {name: "Blue Dream Cannabis", src: "/strains/blue-dream.jpg", price: 420, ratings: 4.2},
-        {name: "Blue Dream Cannabis", src: "/strains/blue-dream.jpg", price: 420, ratings: 4.2},
-        {name: "Blue Dream Cannabis", src: "/strains/blue-dream.jpg", price: 420, ratings: 4.2},
-        {name: "Blue Dream Cannabis", src: "/strains/blue-dream.jpg", price: 420, ratings: 4.2},
-        {name: "Blue Dream Cannabis", src: "/strains/blue-dream.jpg", price: 420, ratings: 4.2},
-        {name: "Blue Dream Cannabis", src: "/strains/blue-dream.jpg", price: 420, ratings: 4.2},
-        {name: "Blue Dream Cannabis", src: "/strains/blue-dream.jpg", price: 420, ratings: 4.2},
-        {name: "Blue Dream Cannabis", src: "/strains/blue-dream.jpg", price: 420, ratings: 4.2},
-        {name: "Blue Dream Cannabis", src: "/strains/blue-dream.jpg", price: 420, ratings: 4.2},
-        {name: "Blue Dream Cannabis", src: "/strains/blue-dream.jpg", price: 420, ratings: 4.2},
+        {name: "Cat Tail", src: "/seeds/cattail.png", price: 225, ratings: 4.3},
+        {name: "Dog Tail", src: "/seeds/dogtail.png", price: 250, ratings: 4.9},
+        {name: "Cat Tail", src: "/seeds/cattail.png", price: 225, ratings: 4.3},
+        {name: "Dog Tail", src: "/seeds/dogtail.png", price: 250, ratings: 4.9},
+        {name: "Cat Tail", src: "/seeds/cattail.png", price: 225, ratings: 4.3},
+        {name: "Dog Tail", src: "/seeds/dogtail.png", price: 250, ratings: 4.9},
+        {name: "Cat Tail", src: "/seeds/cattail.png", price: 225, ratings: 4.3},
+        {name: "Dog Tail", src: "/seeds/dogtail.png", price: 250, ratings: 4.9},
+        {name: "Cat Tail", src: "/seeds/cattail.png", price: 225, ratings: 4.3},
+        {name: "Dog Tail", src: "/seeds/dogtail.png", price: 250, ratings: 4.9},
+        {name: "Dog Tail", src: "/seeds/dogtail.png", price: 250, ratings: 4.9},
     ]
 </script>
   

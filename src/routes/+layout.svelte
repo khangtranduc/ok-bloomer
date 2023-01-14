@@ -13,7 +13,7 @@
 <nav class="container-fluid">
   <ul on:click={() => goto("/")} on:keydown>
     <li><img src="/logo.jpg" alt="" class="logo"/></li>
-    <li><strong>James Bong</strong></li>
+    <li><strong>OK, Bloomer</strong></li>
   </ul>
   <ul class:isOpen>
     <li><a href="/">Home</a></li>
@@ -64,6 +64,8 @@
         transform: scale(1.1);
       }
       li:last-child {
+        padding: 0;
+        // border: solid;
         @include media(lg, md) {
           display: none;
         }
@@ -132,10 +134,11 @@
   }
 
   .logo {
-    min-width: 2rem;
+    max-width: 2rem;
     height: 2rem;
     border-radius: 100%;
     object-fit: cover;
+    border: solid;
   }
   form {
     display: flex;

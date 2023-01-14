@@ -4,7 +4,7 @@
         <hr>
         <label for="email">
             Email
-            <input type="text" id="email" name="email" placeholder="elonmusk@gay.com" required>
+            <input type="text" id="email" name="email" placeholder="elonmusk@gmail.com" required>
         </label>
         <label for="password">
             Password
