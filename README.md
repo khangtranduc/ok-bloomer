@@ -45,7 +45,8 @@ There is also support for mobile devices:
 Truncated Nav Bar             |  Hamburger Menu | 
 :-------------------------:|:-------------------------: | 
 ![](imgs/ipad-splash.png)  |  ![](imgs/ipad-hamburg.png) | 
-<br>
+
+
 Search List Resized  | About Page |
 :-------------: | :--------------------: |
 ![](imgs/ipad-search.png) | ![](imgs/ipad-about.png) |
@@ -54,7 +55,8 @@ Search List Resized  | About Page |
 Truncated Nav Bar             |  Hamburger Menu | 
 :-------------------------:|:-------------------------: | 
 ![](imgs/se-splash.png)  |  ![](imgs/se-hamburg.png) | 
-<br>
+
+
 Search List Resized   | About Page |
 :-------------: | :-----------------: |
 ![](imgs/se-search.png) | ![](imgs/se-about.png) | 
