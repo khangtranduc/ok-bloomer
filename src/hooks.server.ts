@@ -34,6 +34,17 @@ export const handle: Handle = async ({event, resolve}) => {
             username: rows[0].username,
             utype: rows[0].utype
         };
+        if (event.locals.user.utype == "buyer") {
+            const [rows, _] = await db.execute<RowDataPacket[]>('select * from buyer where buid = ?', [session]);
+            if (rows.length) event.locals.user.credit = rows[0].credit;
+        }
+        else if (event.locals.user.utype == "seller"){
+            const [rows, _] = await db.execute<RowDataPacket[]>('select * from seller where suid = ?', [session]);
+            if (rows.length) {
+                event.locals.user.balance = rows[0].balance;
+                event.locals.user.verified = rows[0].verified;
+            }
+        }
     }
 
     return await resolve(event);

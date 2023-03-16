@@ -16,7 +16,10 @@ declare namespace App {
 			fname: string,
 			lname: string,
 			username: string,
-			utype: UTYPE
+			utype: UTYPE,
+			credit?: number,
+			verified?: boolean,
+			balance?: number
 		}
 	}
 	// interface PageData {}

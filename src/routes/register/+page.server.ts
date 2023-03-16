@@ -21,7 +21,7 @@ const register: Action = async ({ cookies, request }) => {
     const type = data.get('utype');
 
     if (password != cpassword){
-        return fail(400, { mismatch: true });
+        return fail(400, { fname, lname, username, email, mismatch: true });
     }
 
     //Check for formality - technically ensured through front-end
