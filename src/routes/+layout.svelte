@@ -3,11 +3,19 @@
   import "iconify-icon";
   import Darkmode from "./darkmode.svelte";
   import { goto } from "$app/navigation";
+  import { page } from '$app/stores';
+
+  let user = $page.data.user;
 
   let query = '';
   $: url = '/search/' + query;
 
   let isOpen = false;
+
+  function submit_form(name: string){
+    let form = <HTMLFormElement>document.getElementById(name)
+    if (form) form.submit();
+  }
 </script>
 
 <nav class="container-fluid">
@@ -29,6 +37,16 @@
         </button>
       </form>
     </li>
+    {#if user}
+    <li><a role="button" href="/dashboard">
+      <iconify-icon icon="lucide:user"/>
+      <span>Profile</span>
+    </a></li>
+    <li><form id="logout_form" role="button" action="/logout" method="POST" on:click={() => submit_form("logout_form")} on:keydown>
+      <iconify-icon icon="lucide:log-out"/>
+      <span>Logout</span>
+    </form></li>
+    {:else}
     <li><a role="button" href="/login">
       <iconify-icon icon="lucide:user"/>
       <span>Login</span>
@@ -37,6 +55,7 @@
       <iconify-icon icon="lucide:user-plus"/>
       <span>Register</span>
     </a></li>
+    {/if}
     <li style="padding: 0 1rem 0 1rem;"><Darkmode/></li>
   </ul>
   <ul>
@@ -145,7 +164,7 @@
     align-items: center;
     gap: 0.3rem;
     margin: 0;
-    button {
+    button:not(.null) {
       display: flex;
       justify-items: center;
       align-items: center;

@@ -20,10 +20,7 @@ const config = {
       pages: "docs",
       assets: "docs",
       fallback: "200.html"
-    }),
-    alias: {
-      '$store': 'src/routes/store.ts'
-    }
+    })
   },
 };
 
