@@ -31,7 +31,7 @@ const login: Action = async ({ cookies, request }) => {
     
     const user = rows[0];
 
-    const userPassword = await bcrypt.compare(password, user.password)
+    const userPassword = await bcrypt.compare(password, user.password);
 
     if (!userPassword)
       return fail(400, { email, password: true })
