@@ -15,7 +15,7 @@ const login: Action = async ({ cookies, request }) => {
     const email = data.get('email');
     const password = data.get('password');
 
-    if (typeof email !== 'string' || !email?.match(/[a-zA-Z0-9]+@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)+/g)){
+    if (typeof email !== 'string' || !email?.match(/.+@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)+/g)){
       return fail(400, { mail_re: true })
     }
 
@@ -34,7 +34,7 @@ const login: Action = async ({ cookies, request }) => {
     const userPassword = await bcrypt.compare(password, user.password)
 
     if (!userPassword)
-      return fail(400, { credentials: true })
+      return fail(400, { email, password: true })
 
     cookies.set('session', user.uid, {
         path: '/',

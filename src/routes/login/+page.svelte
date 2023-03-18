@@ -8,6 +8,7 @@
         <hr>
         {#if form?.credentials}<p>Account not found!</p>{/if}
         {#if form?.mail_re}<p>Invalid email format!</p>{/if}
+        {#if form?.password}<p>Wrong password!</p>{/if}
         <label for="email">
             Email
             <input type="text" id="email" name="email" placeholder="elonmusk@gmail.com" value={form?.email ?? ''} required>
