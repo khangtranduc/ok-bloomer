@@ -27,10 +27,11 @@
     <li><a href="/">Home</a></li>
     <li><a href="/about">About</a></li>
     <li><a href="/contact">Contact</a></li>
+    <li><a href="/thread">Threads</a></li>
   </ul>
   <ul>
     <li>
-      <form on:submit|preventDefault={() => goto(url)}>
+      <form action={url}>
         <input bind:value={query} type="search" id="search" name="search" placeholder="Search">
         <button type="submit">
           <span>Go</span>
@@ -46,6 +47,11 @@
       <iconify-icon icon="lucide:log-out"/>
       <span>Logout</span>
     </form></li>
+    <li>
+      <button on:click={() => goto('/chat')}>
+        <iconify-icon class="fab" icon="lucide:message-circle"/>
+      </button>
+    </li>
     {:else}
     <li><a role="button" href="/login">
       <iconify-icon icon="lucide:user"/>
@@ -64,17 +70,21 @@
 </nav>
 
 <div class:isOpen>
-  <form on:submit|preventDefault={() => goto(url)}>
+  <form action={url}>
     <input bind:value={query} type="search" id="search" name="search" placeholder="Search">
   </form>
   <a role="button" href="/">Home</a>
   <a role="button" href="/about">About</a>
   <a role="button" href="/contact">Contact</a>
+  <a role="button" href="/thread">Threads</a>
 </div>
 
 <slot />
 
 <style lang="scss">
+  .fab {
+
+  }
   ul {
     &:first-child {
       transition: .3s;
@@ -114,11 +124,20 @@
         }
 
         &:nth-child(2), :last-child{
-          iconify-icon {
+          iconify-icon:not(.fab) {
             @include media(lg, md){
               display: none
             }
           }
+        }
+
+        > button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 100%;
+          width: 2.5rem;
+          height: 2.5rem;
         }
       }
       
@@ -164,7 +183,7 @@
     align-items: center;
     gap: 0.3rem;
     margin: 0;
-    button:not(.null) {
+    button {
       display: flex;
       justify-items: center;
       align-items: center;

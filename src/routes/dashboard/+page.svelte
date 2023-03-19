@@ -15,6 +15,8 @@
     {#if user.utype == "buyer"}<h3>Credits: {user.credit ?? 0}</h3>{/if}
     {#if user.utype == "seller"}<h3>Balance: <ins>${user.balance ?? 0}</ins></h3>{/if}
     
+    <hr>
+
     <hgroup>
         <h2><u>Personal Information</u></h2>
         <table role="grid">

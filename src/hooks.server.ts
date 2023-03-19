@@ -2,13 +2,6 @@ import { db } from "$lib/database";
 import type { Handle } from "@sveltejs/kit";
 import type { RowDataPacket } from 'mysql2/promise';
 
-function redirect(location: string, body?: string) {
-    return new Response(body, {
-        status: 303,
-        headers: { location }
-    });
-}
-
 const unProtectedRoutes: string[] = [
     '/',
     '/login',
@@ -19,6 +12,7 @@ const unProtectedRoutes: string[] = [
 ];
 
 export const handle: Handle = async ({event, resolve}) => {
+    //USER AUTHENTICATION
     const session = event.cookies.get('session');
     if (!session)
         return await resolve(event);
@@ -28,6 +22,7 @@ export const handle: Handle = async ({event, resolve}) => {
     //User exists
     if (rows.length){
         event.locals.user = {
+            uid: session,
             email: rows[0].email,
             fname: rows[0].fname,
             lname: rows[0].lname,

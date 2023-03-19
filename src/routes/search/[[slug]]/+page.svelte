@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import type { PageData } from './$types';
     import Star from './star.svelte';
   
@@ -27,7 +28,7 @@
     {/if}
     <div class="flex">
         {#each items as x}
-        <article>
+        <article on:click={() => goto('/product')} on:keydown>
             <img alt="" src={x.src}/>
             <div class="container">
                 <h4>{x.name}</h4>

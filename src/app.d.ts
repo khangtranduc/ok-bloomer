@@ -7,21 +7,26 @@ enum UTYPE{
 	ADMIN = "admin"
 }
 
-declare namespace App {
+import type { Thread } from "$lib/types";
 
-	// interface Error {}
-	interface Locals {
-		user: {
-			email: string,
-			fname: string,
-			lname: string,
-			username: string,
-			utype: UTYPE,
-			credit?: number,
-			verified?: boolean,
-			balance?: number
+declare global{
+	declare namespace App {
+		// interface Error {}
+		interface Locals {
+			user: {
+				uid: string,
+				email: string,
+				fname: string,
+				lname: string,
+				username: string,
+				utype: UTYPE,
+				credit?: number,
+				verified?: boolean,
+				balance?: number
+			},
+			threads: Thread[]
 		}
+		// interface PageData {}
+		// interface Platform {}
 	}
-	// interface PageData {}
-	// interface Platform {}
 }
