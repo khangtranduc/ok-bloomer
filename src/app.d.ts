@@ -13,17 +13,7 @@ declare global{
 	declare namespace App {
 		// interface Error {}
 		interface Locals {
-			user: {
-				uid: string,
-				email: string,
-				fname: string,
-				lname: string,
-				username: string,
-				utype: UTYPE,
-				credit?: number,
-				verified?: boolean,
-				balance?: number
-			},
+			user: User,
 			threads: Thread[]
 		}
 		// interface PageData {}

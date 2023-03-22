@@ -1,6 +1,20 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    let user = $page.data.user;
+    import type { User } from "$lib/types";
+    let user = <User> $page.data.user;
+    let labels = [
+        ['Email', user.email, "email"], 
+        ['Username', user.username, "username"], 
+        ['First Name', user.fname, "fname"], 
+        ['Last Name', user.lname, "lname"]];
+
+    let edit = [
+        false,
+        false,
+        false,
+        false
+    ]
+
 </script>
 
 <div class="container">
@@ -21,22 +35,22 @@
         <h2><u>Personal Information</u></h2>
         <table role="grid">
             <tbody>
-                <tr>
-                    <th scope="row">Email</th>
-                    <td>{user.email}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Username</th>
-                    <td>{user.username}</td>
-                </tr>
-                <tr>
-                    <th scope="row">First Name</th>
-                    <td>{user.fname}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Last Name</th>
-                    <td>{user.lname}</td>
-                </tr>
+                {#each labels as info, i}
+                    <tr>
+                        <th scope="row">{info[0]}</th>
+                        <td>
+                            {#if edit[i]}
+                                <form method="POST" action="?/updateInfo">
+                                    <input type="hidden" name="field" id="field" value={info[2]}/>
+                                    <input name="value" id="value" value={info[1]}/>
+                                </form>
+                            {:else}
+                                {info[1]}
+                            {/if}
+                            <iconify-icon icon="lucide:pencil" on:click={()=>edit[i] = !edit[i]} on:keydown/>
+                        </td>
+                    </tr>
+                {/each}
             </tbody>
         </table>
     </hgroup>
@@ -46,5 +60,20 @@
     h3 {
         border: solid;
         margin-bottom: 1rem;
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    form {
+        margin: 0;
+        height: 1rem;
+        input {
+            height: 100%;
+            margin: 0;
+        }
     }
 </style>

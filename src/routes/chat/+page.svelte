@@ -1,45 +1,63 @@
 <script lang="ts">
-    import { each } from "svelte/internal";
     import Contact from "./contact.svelte";
     import Message from "./message.svelte";
 
+    export let data;
+    export let form;
 
-    let contacts = [
-        {name: "George 1", last: "You ni**er"},
-        {name: "George 2", last: "You ni**er"},
-        {name: "George 3", last: "You ni**er"},
-        {name: "George 4", last: "You ni**er"},
-        {name: "George 5", last: "You ni**er"}
-    ];
+    let contacts = data.contacts;
 
-    let convo = [ 
-        {} 
-    ];
+    let selected = form?.ruid ?? -1;
+    //TODO: This hoverer updates too slow
+    let hoverer = -1;
+
+    let convo = form?.convo ?? [];
+
+    const submitForm = () => {
+        let form = <HTMLFormElement> document.getElementById('select');
+        form?.submit();
+    }
 </script>
+
+<form style="display: none" id="select" method="POST" action="?/selectChat">
+    <input type="hidden" name="selectChat" id="selectChat" value={hoverer}/>
+</form>
 
 <main class="container-fluid">
     <vgroup>
         <hgroup>
             {#each contacts as contact}
-                <Contact name = {contact.name} last = {contact.last}/>
+                <Contact on:mouseenter={() => hoverer = contact.uid} on:click={() => {selected = contact.uid; submitForm()}}
+                    name = {contact.fname.concat(" ", contact.lname)}
+                    last = {contact.last ?? "No messages sent yet"}
+                    selected = {selected == contact.uid}/>
             {/each}
         </hgroup>
         <vline/>
         <hgroup>
-            {#each convo as message}
-                <Message/>
-            {/each}
+            {#if form?.convo}
             <form method="POST" action="?/sendMessage">
                 <input id="message" name="message" placeholder="Send message..."/>
+                <input type="hidden" name="ruid" value={selected}/>
                 <button type="submit">
                     Send
                 </button>
             </form>
+            <scroll>
+                {#each convo as message}
+                    <Message suid={message.suid} text={message.text} timeStamp={message.timeStamp}/>
+                {/each}
+            </scroll>
+            {/if}
         </hgroup>
     </vgroup>
 </main>
 
 <style lang="scss">
+    scroll {
+        flex: 1;
+        overflow: auto;
+    }
     vline {
         border: solid;
         border-width: .01rem;
@@ -56,10 +74,17 @@
                 width: 20%;
             }
             &:last-child {
+                height: 88vh;
                 width: 80%;
                 display: flex;
                 flex-direction: column-reverse;
                 padding-left: .8rem;
+                overflow-y: scroll;
+                scroll {
+                    display: flex;
+                    flex-direction: column-reverse;
+                    padding-bottom: .5rem;
+                }
                 form {
                     display: flex;
                     gap: .5rem;

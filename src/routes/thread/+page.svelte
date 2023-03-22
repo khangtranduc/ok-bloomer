@@ -1,13 +1,27 @@
 <script lang="ts">
     import Thread from "./thread.svelte";
     export let data;
+    export let form;
     let threads = data.threads;
     let labels = data.labels;
     let open = false;
     let selectLabels: string[] = [];
     let searchQuery: string = "";
+    let notloggedin = form?.notloggedin;
     $: re = new RegExp(".*" + searchQuery + ".*", "g");
 </script>
+
+{#if notloggedin}
+<dialog open>
+    <article>
+        <header>
+            <a class="close" href={'#'} on:click={() => {notloggedin = false}}> </a>
+            Not signed in!
+        </header>
+        You must be <a href="/login">signed in</a> to pop open a new thread.
+    </article>
+</dialog>
+{/if}
 
 {#if open}
 <dialog open>

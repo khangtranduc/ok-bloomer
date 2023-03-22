@@ -1,15 +1,7 @@
 import { db } from "$lib/database";
 import type { Handle } from "@sveltejs/kit";
 import type { RowDataPacket } from 'mysql2/promise';
-
-const unProtectedRoutes: string[] = [
-    '/',
-    '/login',
-    '/register',
-    '/about',
-    '/contact',
-    '/search'
-];
+import type { User } from "$lib/types";
 
 export const handle: Handle = async ({event, resolve}) => {
     //USER AUTHENTICATION
@@ -21,14 +13,7 @@ export const handle: Handle = async ({event, resolve}) => {
 
     //User exists
     if (rows.length){
-        event.locals.user = {
-            uid: session,
-            email: rows[0].email,
-            fname: rows[0].fname,
-            lname: rows[0].lname,
-            username: rows[0].username,
-            utype: rows[0].utype
-        };
+        event.locals.user = <User> rows[0];
         if (event.locals.user.utype == "buyer") {
             const [rows, _] = await db.execute<RowDataPacket[]>('select * from buyer where buid = ?', [session]);
             if (rows.length) event.locals.user.credit = rows[0].credit;

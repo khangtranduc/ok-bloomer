@@ -1,15 +1,17 @@
 <script lang="ts">
     import { page, updated } from "$app/stores";
     export let data;
+    export let form;
     let thread = data.thread;
     let threadPosts = data.threadPosts;
     let open: boolean = false;
+    let notloggedin = form?.notloggedin;
 
     const format = (timeStamp: number) => {
         return new Date(timeStamp).toDateString();
     }
 
-    let isOp = threadPosts[0].uid == $page.data.user.uid;
+    let isOp = threadPosts[0].uid == $page.data.user?.uid;
 
     let post_id = -1;
     let solution = 1;
@@ -23,6 +25,18 @@
     <input type="hidden" name="post_id" id="post_id" value={post_id}/>
     <input type="hidden" name="solution" id="solution" value={solution}/>
 </form>
+
+{#if notloggedin}
+<dialog open>
+    <article>
+        <header>
+            <a class="close" href={'#'} on:click={() => {notloggedin = false}}> </a>
+            Not signed in!
+        </header>
+        You must be <a href="/login">signed in</a> to write a new thread post.
+    </article>
+</dialog>
+{/if}
 
 {#if open}
 <dialog open>
