@@ -10,10 +10,12 @@
 <div class="title">
     <h1 class="gradient">OK, Bloomer!</h1>
     <p>Your one stop shop for everything <span class="gradient">botany</span></p>
-    <button on:click={() => goto('/search')}>
-        <span>Explore our catalogs</span>
-        <iconify-icon icon="lucide:arrow-right" width="25"/>
-    </button>
+    <form action="/search?/all" method="POST">
+        <button type="submit">
+            <span>Explore our catalogs</span>
+            <iconify-icon icon="lucide:arrow-right" width="25"/>
+        </button>
+    </form>
 </div>
 
 <style lang="scss">

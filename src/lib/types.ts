@@ -37,3 +37,26 @@ export type ThreadPost = {
     solution: boolean,
     text: string
 }
+
+export type Product = {
+    product_id: number,
+    suid: number,
+    sname: string,
+    name: string,
+    thumbnail: string,
+    price: number,
+    rating: number,
+    stock: number,
+    category: string,
+    description: string,
+}
+
+export type Review = {
+    username: string,
+    buid: number,
+    product_id: number,
+    title: string,
+    text: string,
+    timeStamp: number,
+    rating: number
+}

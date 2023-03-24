@@ -4,22 +4,21 @@
 
 
 <div>
+    <mark>{stars}</mark>
     {#each {length: Math.floor(stars)} as _}
         <iconify-icon icon="lucide:star"/>
     {/each}
     {#if stars > Math.floor(stars)}
         <iconify-icon icon="lucide:star-half"/>
     {/if}
-    <span>{stars}</span>
 </div>
 
 
 <style lang="scss">
-    span {
-        background-color: $star-col;
-        padding: 0 .3rem 0 .3rem;
-        margin-left: .2rem;
-        border-radius: 30%;
+    mark {
+        background-color: greenyellow;
+        border-radius: 5px;
+        margin-right: .3rem;
     }
     div {
         display: flex;

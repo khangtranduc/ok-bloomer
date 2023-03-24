@@ -2,13 +2,12 @@
   import "@picocss/pico/scss/pico.scss";
   import "iconify-icon";
   import Darkmode from "./darkmode.svelte";
-  import { goto } from "$app/navigation";
+  import { goto, invalidate } from "$app/navigation";
   import { page } from '$app/stores';
+  import { query } from '$lib/stores';
 
   let user = $page.data.user;
-
-  let query = '';
-  $: url = '/search/' + query;
+  $: queryString = $query;
 
   let isOpen = false;
 
@@ -31,8 +30,8 @@
   </ul>
   <ul>
     <li>
-      <form action={url}>
-        <input bind:value={query} type="search" id="search" name="search" placeholder="Search">
+      <form action='/search?/search' method='POST'>
+        <input bind:value={queryString} type="search" id="query" name="query" placeholder="Search">
         <button type="submit">
           <span>Go</span>
         </button>
@@ -69,9 +68,10 @@
   </ul>
 </nav>
 
+<!-- TODO: Do something here -->
 <div class:isOpen>
-  <form action={url}>
-    <input bind:value={query} type="search" id="search" name="search" placeholder="Search">
+  <form action='/search?/search' method='POST'>
+    <input type="search" id="search" name="search" placeholder="Search">
   </form>
   <a role="button" href="/">Home</a>
   <a role="button" href="/about">About</a>
@@ -82,9 +82,6 @@
 <slot />
 
 <style lang="scss">
-  .fab {
-
-  }
   ul {
     &:first-child {
       transition: .3s;
