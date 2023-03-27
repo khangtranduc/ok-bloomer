@@ -27,7 +27,7 @@
     </hgroup>
 
     {#if user.utype == "buyer"}<h3>Credits: {user.credit ?? 0}</h3>{/if}
-    {#if user.utype == "seller"}<h3>Balance: <ins>${user.balance ?? 0}</ins></h3>{/if}
+    {#if user.utype == "seller"}<h3>Balance: <ins>${(user.balance ?? 0).toFixed(2)}</ins></h3>{/if}
     
     <hr>
 
@@ -66,6 +66,13 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        iconify-icon {
+            transition: .3s;
+            &:hover {
+                transform: scale(1.1);
+                transition: .3s;
+            }
+        }
     }
 
     form {

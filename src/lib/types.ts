@@ -60,3 +60,23 @@ export type Review = {
     timeStamp: number,
     rating: number
 }
+
+export type CartItem = {
+    count: number,
+    product_id: number,
+    name: string,
+    thumbnail: string,
+    suid: number,
+    price: number
+}
+
+export type Blog = {
+    bid: number,
+    uid: number,
+    username: string,
+    name?: string,
+    title: string,
+    text: string,
+    thumbnail: string,
+    timeStamp: number
+}

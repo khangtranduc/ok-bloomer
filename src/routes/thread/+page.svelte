@@ -37,7 +37,7 @@
         </chipset>
         <form method="POST" action="?/popopen">
             <input type="hidden" name="labels" value={JSON.stringify(selectLabels)}/>
-            <label for="label">Fruit</label>
+            <label for="label">Labels</label>
             <select id="label" required>
                 <option value="" selected>Select label some labels</option>
                 {#each labels as label}

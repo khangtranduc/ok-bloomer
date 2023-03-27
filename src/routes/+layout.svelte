@@ -2,7 +2,7 @@
   import "@picocss/pico/scss/pico.scss";
   import "iconify-icon";
   import Darkmode from "./darkmode.svelte";
-  import { goto, invalidate } from "$app/navigation";
+  import { goto } from "$app/navigation";
   import { page } from '$app/stores';
   import { query } from '$lib/stores';
 
@@ -27,6 +27,8 @@
     <li><a href="/about">About</a></li>
     <li><a href="/contact">Contact</a></li>
     <li><a href="/thread">Threads</a></li>
+    <li><a href="/saved">Saved</a></li>
+    <li><a href="/blog">Blogs</a></li>
   </ul>
   <ul>
     <li>
@@ -49,6 +51,11 @@
     <li>
       <button on:click={() => goto('/chat')}>
         <iconify-icon class="fab" icon="lucide:message-circle"/>
+      </button>
+    </li>
+    <li>
+      <button on:click={() => goto('/cart')}>
+        <iconify-icon class="fab" icon="lucide:shopping-cart"/>
       </button>
     </li>
     {:else}
