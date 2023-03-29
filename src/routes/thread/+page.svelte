@@ -8,7 +8,7 @@
     let selectLabels: string[] = [];
     let searchQuery: string = "";
     let notloggedin = form?.notloggedin;
-    $: re = new RegExp(".*" + searchQuery + ".*", "g");
+    $: re = new RegExp(".*" + searchQuery + ".*", "i");
 </script>
 
 {#if notloggedin}
@@ -123,5 +123,8 @@
             padding: .1rem;
             background-color: $star-col;
         }
+    }
+    header {
+        margin-bottom: 1rem;
     }
 </style>

@@ -8,10 +8,12 @@
 		let container = document.getElementById('editor');
 		quill = new Quill(container, {
             modules: {
-            toolbar: [
-                ["bold", "italic", "underline", "strike"],
-                ["link", "code-block"]
-            ]
+                toolbar: [
+                    [{ header: 1 }, { header: 2 }, "blockquote"],
+                    ["bold", "italic", "underline", "strike"],
+                    [{ list: "ordered" }, { list: "ordered" }],
+                    ["link", "code-block"]
+                ]
             },
             placeholder: "Type something...",
             theme: "snow" // or 'bubble'

@@ -4,7 +4,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import type { RowDataPacket } from 'mysql2/promise';
 import type { Action, Actions } from '@sveltejs/kit';
 import path from 'path';
-import { writeFile } from 'fs/promises';
+import { writeFile, readFile } from 'fs/promises';
 
 export const prerender = false;
 
@@ -15,7 +15,7 @@ export const load = async ({ url, fetch }) => {
 
     if (!rows.length) return fail(404);
 
-    const blog = <Blog> rows[0]
+    const blog = <Blog> rows[0];
 
     return {
         blog: blog

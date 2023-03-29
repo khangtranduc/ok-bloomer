@@ -1,5 +1,8 @@
 <script lang="ts">
     import { redirect } from '@sveltejs/kit';
+    import {  onMount } from 'svelte'
+	import Quill from "quill";
+	let quill:any = null;
 
     export let data;
 
@@ -9,11 +12,35 @@
     let content: string;
     let edit = false;
     let title = blog.title;
+    let editor: HTMLDivElement;
     const getContent = async () => {
-        content = await (await fetch(`${blog.text}.html`)).text();
+        content = await fetch(`${blog.text}.html`).then(async (response) => {
+            if(response.status == 200){
+                return await response.text()
+            }
+            return "Currently empty..., press edit to start writing!"
+        });
     }
     const submitEdit = () => {
         (<HTMLFormElement> document.getElementById('edit'))?.submit();
+    }
+    $: if (editor && !quill) {
+        quill = new Quill(editor, {
+            modules: {
+                toolbar: [
+                    [{ header: 2 }, { header: 3 }, { header: 4 }, "blockquote"],
+                    ["bold", "italic", "underline", "strike"],
+                    [{ list: "ordered" }, { list: "ordered" }],
+                    ["link", "code-block"]
+                ]
+            },
+            placeholder: "Type something...",
+            theme: "snow" // or 'bubble'
+        });
+        quill.on('text-change', () => {
+            content = quill.root.innerHTML.replaceAll("<p><br></p>", "");
+        })
+        quill.clipboard.dangerouslyPasteHTML(content);
     }
 </script>
 
@@ -45,7 +72,8 @@
     </vgroup>
     {#if content}
         {#if edit}
-            <textarea bind:value={content} rows=30/>
+            <!-- <textarea bind:value={content} rows=30/> -->
+            <div bind:this={editor}/>
         {:else}
             {@html content}
         {/if}
@@ -58,7 +86,7 @@
     {/if}
     {@html `
         <style>
-            h4, p {
+            h2, h3, h4, p {
                 margin-bottom: 0;
             }
         </style>
@@ -70,9 +98,6 @@
 </svelte:head>
 
 <style lang="scss">
-    #editor {
-        height: 20rem;
-    }
     vgroup {
         display: flex;
         align-items: center;
