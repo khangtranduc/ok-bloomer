@@ -8,6 +8,7 @@
 
   let user = $page.data.user;
   $: queryString = $query;
+  $: utype = user?.utype;
 
   let isOpen = false;
 
@@ -27,10 +28,13 @@
     <li><a href="/about">About</a></li>
     <li><a href="/contact">Contact</a></li>
     <li><a href="/thread">Threads</a></li>
-    <li><a href="/saved">Saved</a></li>
+    {#if utype != 'seller'}
+      <li><a href="/saved">Saved</a></li>
+    {/if}
     <li><a href="/blog">Blogs</a></li>
   </ul>
   <ul>
+    {#if utype != 'seller'}
     <li>
       <form action='/search?/search' method='POST'>
         <input bind:value={queryString} type="search" id="query" name="query" placeholder="Search">
@@ -39,6 +43,7 @@
         </button>
       </form>
     </li>
+    {/if}
     {#if user}
     <li><a role="button" href="/dashboard">
       <iconify-icon icon="lucide:user"/>
@@ -53,11 +58,13 @@
         <iconify-icon class="fab" icon="lucide:message-circle"/>
       </button>
     </li>
+    {#if utype != 'seller'}
     <li>
       <button on:click={() => goto('/cart')}>
         <iconify-icon class="fab" icon="lucide:shopping-cart"/>
       </button>
     </li>
+    {/if}
     {:else}
     <li><a role="button" href="/login">
       <iconify-icon icon="lucide:user"/>

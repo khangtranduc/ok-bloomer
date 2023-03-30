@@ -4,9 +4,17 @@
     import Star from '../search/star.svelte';
     import Review from './review.svelte';
     import { cart } from '$lib/stores';
-
+    import { page } from '$app/stores';
 
     export let data;
+
+    let user = $page.data.user;
+    $: utype = user.utype;
+
+    let editTitle = false;
+    let editDesc = false;
+    let titleForm: HTMLFormElement;
+    let descForm: HTMLFormElement;
 
     let product = data.product as Product;
 
@@ -43,14 +51,27 @@
         confirm = true;
         count = 0;
     }
+    const editSplashes = () => {
+        console.log("cum");
+    }
     $: relPosX = posX - root;
     $: isHalf = relPosX < 0 ? relPosX + 30 < 15 : relPosX < 15;
     $: rating = reviewRating >= 0 ? reviewRating + (isHalf ? 0.5 : 1) : 0;
 </script>
 
-<form style="display:none" id="save" action="?/save" method="POST">
+<form class="hidden" id="save" action="?/save" method="POST">
     <input name="exists" value={isSaved}/>
     <input name="product_id" value={product.product_id}/>
+</form>
+
+<form class="hidden" method="POST" action="?/updateTitle" bind:this={titleForm}>
+    <input name="title" value={product.name}/>
+    <input name="pid" value={product.product_id}/>
+</form>
+
+<form class="hidden" method="POST" action="?/updateDesc" bind:this={descForm}>
+    <input name="desc" value={product.description}/>
+    <input name="pid" value={product.product_id}/>
 </form>
 
 {#if confirm}
@@ -108,21 +129,53 @@
 <main class="container">
     <hgroup>
         <h1>
-            {product.name}
+            {#if editTitle}
+                <input bind:value={product.name}/>
+            {:else}
+                {product.name}
+            {/if}
+            {#if utype != 'seller'}
             <iconify-icon   on:click={save}
                             on:keydown
                             icon={`material-symbols:bookmark${isSaved ? "" : "-outline"}-rounded`}/>
+            {:else}
+            <iconify-icon icon="lucide:pencil" on:keydown on:click={() => {
+                if (!editTitle) editTitle = true
+                else {
+                    editTitle = false;
+                    titleForm.submit();
+                }
+            }}/>
+            {/if}
         </h1>
         <p>Offered by @{product.sname}</p>
         <Star stars={+product.rating.toFixed(2)}/>
     </hgroup>
     <vgroup>
-        <Carousel {splashes}/>
+        <Carousel {splashes} on:click={editSplashes}/>
         <div>
             <hgroup>
-                <h1>Description</h1>
-                <p>{product.description}</p>
+                <h1>
+                    Description
+                    {#if utype == 'seller'}
+                        <iconify-icon icon="lucide:pencil" on:keydown on:click={() => {
+                            if (!editDesc) editDesc = true;
+                            else {
+                                editDesc = false;
+                                descForm.submit();
+                            }
+                        }}/>
+                    {/if}
+                </h1>
+                <p>
+                    {#if editDesc}
+                        <textarea bind:value={product.description}/>
+                    {:else}
+                        {product.description}
+                    {/if}
+                </p>
             </hgroup>
+            {#if utype != 'seller'}
             <div>
                 <hgroup>
                     <h1>Price: ${product.price.toFixed(2)}</h1>
@@ -142,6 +195,7 @@
                     <iconify-icon icon="lucide:shopping-cart"/>
                 </button>
             </div>
+            {/if}
         </div>
     </vgroup>
     <vflex>
@@ -149,9 +203,11 @@
             <h2>Reviews</h2>
             <p>{reviews.length} reviews</p>
         </hgroup>
+        {#if utype != 'seller'}
         <button on:click={() => open = true}>
             Write a review
         </button>
+        {/if}
     </vflex>
     <list>
         {#each reviews as review}
@@ -161,8 +217,20 @@
 </main>
 
 <style lang="scss">
+    .hidden {
+        display: none
+    }
     .selected {
         color: $primary-500;
+    }
+    iconify-icon {
+        &[icon="lucide:pencil"] {
+            transition: .3s;
+            &:hover {
+                transition: .3s;
+                transform: scale(1.1);
+            }
+        }
     }
     spinner {
         display: flex;
@@ -216,6 +284,10 @@
             }
         }
     }
+    textarea {
+        resize: vertical;
+        max-height: 19rem;
+    }
     header {
         margin-bottom: 1rem;
     }
@@ -231,6 +303,9 @@
         display: flex;
         justify-content: space-around;
         margin-bottom: 2rem;
+        > div {
+            flex: 1;
+        }
     }
     vflex {
         display: flex;

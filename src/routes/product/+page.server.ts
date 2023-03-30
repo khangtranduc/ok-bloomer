@@ -30,6 +30,40 @@ export const load = async ({ url, cookies }) => {
     }
 }
 
+const updateTitle: Action = async ({ request }) => {
+    const data = await request.formData();
+    const title = data.get('title');
+    const pid = data.get('pid');
+
+    if (typeof title !== 'string' || typeof pid !== 'string' || !title || !pid)
+        return fail(400, { error: true })
+
+    await db.execute(`
+        update product
+        set name = ?
+        where product_id = ?
+    `, [title, pid]);
+
+    throw redirect(302, `/product?pid=${pid}`)
+}
+
+const updateDesc: Action = async ({ request }) => {
+    const data = await request.formData();
+    const desc = data.get('desc');
+    const pid = data.get('pid');
+
+    if (typeof desc !== 'string' || typeof pid !== 'string' || !desc || !pid)
+        return fail(400, { error: true })
+
+    await db.execute(`
+        update product
+        set description = ?
+        where product_id = ?
+    `, [desc, pid]);
+
+    throw redirect(302, `/product?pid=${pid}`)
+}
+
 const review: Action = async ({ request, cookies }) => {
     const data = await request.formData();
     const title = data.get('title');
@@ -67,4 +101,4 @@ const save: Action = async ({ request, cookies }) => {
     throw redirect(302, `/product?pid=${product_id}`)
 }
 
-export const actions: Actions = { review, save }
+export const actions: Actions = { review, save, updateTitle, updateDesc }

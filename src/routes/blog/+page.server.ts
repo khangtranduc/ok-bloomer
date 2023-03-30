@@ -1,7 +1,9 @@
 import { db } from "$lib/database"
 import type { Blog } from "$lib/types";
-import type { Action, Actions } from "@sveltejs/kit";
+import { fail, type Action, type Actions } from "@sveltejs/kit";
 import type { RowDataPacket } from "mysql2/promise";
+import path from 'path';
+import { writeFile } from 'fs/promises';
 
 export const prerender = false;
 
@@ -16,13 +18,24 @@ export let load = async () => {
 const newBlog: Action = async ({ request, cookies }) => {
     const data = await request.formData();
     const title = data.get('title');
+    const thumbnail = data.get('thumbnail');
+    const filename = data.get('filename');
     const uid = cookies.get('session');
 
+    const filePath = path.join(
+        process.cwd(),
+        'static',
+        `/blog/image/${filename}`
+    )
+
+    if (typeof thumbnail !== 'string') return fail(400, { thumbnail: true })
+
+    await writeFile(filePath, thumbnail, 'base64');
+
     await db.execute(`
-        insert into blog (title, uid, thumbnail)
-        select ? title, ? uid, concat('/blog/image/', max(bid) + 1)
-        from blog
-    `, [title, uid]);
+        insert into blog (title, uid, thumbnail) values
+        (?, ?, ?)
+    `, [title, uid, `blog/image/${filename}`]);
 }
 
 export const actions: Actions = { newBlog }

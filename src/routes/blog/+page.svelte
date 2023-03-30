@@ -1,5 +1,7 @@
 <script lang="ts">
     import Blog from "./blog.svelte";
+    let files: FileList;
+    let image: string;
 
     export let data;
 
@@ -7,6 +9,13 @@
     let searchQuery = "";
     let open = false;
     $: re = new RegExp(".*" + searchQuery + ".*", "i");
+    $: if (files) {
+        const reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+        reader.onload = e => {
+            image = (<string> e.target?.result).split(',')[1];
+        };
+    }
 </script>
 
 {#if open}
@@ -21,6 +30,13 @@
                 Title
                 <input id='title' name='title' placeholder="Blog title here..."/>
             </label>
+            <input type="hidden" name="thumbnail" value={image}/>
+            <input
+                accept="image/png, image/jpeg"
+                name="filename"
+                bind:files
+                type="file"
+            />
             <button type="submit">Create</button>
         </form>
     </article>
@@ -64,11 +80,13 @@
     header {
         margin-bottom: 1rem;
     }
+    article {
+        padding-bottom: 0;
+    }
     vgroup {
         display: flex;
         justify-content: space-between;
         align-items: center;
-
         form {
             margin: 0;
             input {

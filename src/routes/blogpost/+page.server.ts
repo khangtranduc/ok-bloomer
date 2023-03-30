@@ -26,7 +26,18 @@ const edit: Action = async ({ request }) => {
     const data = await request.formData();
     const content = data.get('content');
     const filename = data.get('filename');
+    const imagePath = data.get('imagePath');
+    const image = data.get('image');
+    const title = data.get('title');
     const bid = data.get('bid');
+
+    if (typeof title !== 'string' || !title) return fail(400, { title: true });
+
+    await db.execute(`
+        update blog
+        set title = ?
+        where bid = ?
+    `, [title, bid]);
 
     if (typeof filename !== 'string' || typeof content !== 'string' || !filename || !content) return fail(400, { noContent: true });
 
@@ -34,9 +45,19 @@ const edit: Action = async ({ request }) => {
         process.cwd(),
         'static',
         filename
-    )
-
+    );
+    
     await writeFile(filePath, content);
+
+    const imgPath = path.join(
+        process.cwd(),
+        'static',
+        `${imagePath}`
+    );
+
+    if (typeof image !== 'string') return fail(400, { image: true });
+    
+    await writeFile(imgPath, image, 'base64');
 
     throw redirect(302, `/blogpost?bid=${bid}`)
 }

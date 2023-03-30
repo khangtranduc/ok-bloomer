@@ -2,18 +2,18 @@ import { fail, redirect } from '@sveltejs/kit';
 import type { Action, Actions } from '@sveltejs/kit';
 import { db } from '$lib/database';
 import type { RowDataPacket } from 'mysql2/promise';
-import type { User } from '$lib/types';
+import type { Product, User } from '$lib/types';
 
 export const prerender = false;
 
 export const load = async ({ locals, cookies }) => {
-    if (!locals.user) throw redirect(302, "/");
     const uid = cookies.get('session');
     const [rows, _] = await db.execute<RowDataPacket[]>(`
         select *
         from user
         where uid = ?
     `, [uid]);
+    let products: Product[] = [];
 
     if (rows.length){
         locals.user = <User> rows[0];
@@ -27,11 +27,18 @@ export const load = async ({ locals, cookies }) => {
                 locals.user.balance = rows[0].balance;
                 locals.user.verified = rows[0].verified;
             }
+            const [prods, x] = await db.execute<RowDataPacket[]>(`
+                select product.*, username 
+                from product, user 
+                where suid = uid and suid = ?
+            `, [uid]);
+            products = <Product[]> prods;
         }
     }
 
     return {
-        user: locals.user
+        user: locals.user,
+        products: products
     }
 }
 

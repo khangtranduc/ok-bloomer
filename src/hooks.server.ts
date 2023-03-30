@@ -1,14 +1,35 @@
 import { db } from "$lib/database";
-import type { Handle } from "@sveltejs/kit";
+import { redirect, type Handle } from "@sveltejs/kit";
 import type { RowDataPacket } from 'mysql2/promise';
 import type { User } from "$lib/types";
+
+const loggedinProtected = [
+    '/login',
+    '/register'
+]
+
+const sellerProtected = [
+    '/search',
+    '/cart',
+    '/saved'
+]
+
+const loggedoutProtected = [
+    '/dashboard'
+]
 
 export const handle: Handle = async ({event, resolve}) => {
     //USER AUTHENTICATION
     const session = event.cookies.get('session');
-    if (!session)
+    if (!session) {
+        if (loggedoutProtected.includes(event.url.pathname))
+            throw redirect(302, '/login')
         return await resolve(event);
+    }
     
+    if (session && loggedinProtected.includes(event.url.pathname))
+        throw redirect(302, '/dashboard');
+
     const [rows, _] = await db.execute<RowDataPacket[]>('select * from user where uid = ?', [session]);
 
     //User exists
@@ -26,6 +47,9 @@ export const handle: Handle = async ({event, resolve}) => {
             }
         }
     }
+
+    if (event.locals.user.utype == 'seller' && sellerProtected.includes(event.url.pathname))
+        throw redirect(302, '/')
 
     return await resolve(event);
 }

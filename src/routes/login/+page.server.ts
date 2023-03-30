@@ -6,10 +6,6 @@ import bcrypt from 'bcrypt';
 
 export const prerender = false;
 
-export const load = async ({ locals }) => {
-  if (locals.user) throw redirect(302, '/');
-}
-
 const login: Action = async ({ cookies, request }) => {
     const data = await request.formData();
     const email = data.get('email');

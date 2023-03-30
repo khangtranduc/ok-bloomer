@@ -1,5 +1,8 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
+    import { page } from '$app/stores';
+
+    let user = $page.data.user;
+    $: utype = user?.utype;
 
     let curr = 0;
     setInterval(() => curr = (curr + 1) % 6, 3000)
@@ -10,12 +13,21 @@
 <div class="title">
     <h1 class="gradient">OK, Bloomer!</h1>
     <p>Your one stop shop for everything <span class="gradient">botany</span></p>
+    {#if utype == 'seller'}
+    <form action="/dashboard">
+        <button type="submit">
+            <span>View your products</span>
+            <iconify-icon icon="lucide:arrow-right" width="25"/>
+        </button>
+    </form>
+    {:else}
     <form action="/search?/all" method="POST">
         <button type="submit">
             <span>Explore our catalogs</span>
             <iconify-icon icon="lucide:arrow-right" width="25"/>
         </button>
     </form>
+    {/if}
 </div>
 
 <style lang="scss">

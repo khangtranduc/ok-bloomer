@@ -1,15 +1,25 @@
 <script lang="ts">
+    import { page } from '$app/stores';
+    
     export let splashes: string[];
+    
+    let user = $page.data.user;
+    $: isSeller = user?.utype == 'seller';
+
     let idx = 0;
     let fallback = '/splashes/weed-1.jpg'
+
 </script>
 
 <main>
     <vgroup>
         <iconify-icon icon="lucide:chevron-left" on:click={() => idx = ((idx - 1) % splashes.length + splashes.length) % splashes.length} on:keydown/>
-        <img alt="" src={splashes[idx]} 
-        on:click={() => idx = (idx + 1) % splashes.length}
-        {...{onerror:`this.onerror=null;this.src='${fallback}'`}} />
+        <zgroup class:isSeller>
+            <img alt="" src={splashes[idx]}
+            on:click={() => idx = (idx + 1) % splashes.length}
+            {...{onerror:`this.onerror=null;this.src='${fallback}'`}} />
+            <button on:click>Edit Splashes</button>
+        </zgroup>
         <iconify-icon icon="lucide:chevron-right" on:click={() => idx = (idx + 1) % splashes.length} on:keydown/>
     </vgroup>
     <vgroup>
@@ -20,6 +30,31 @@
 </main>
 
 <style lang="scss">
+    .isSeller {
+        &:hover {
+            img {
+                transition: .3s;
+                opacity: .4;
+            }
+            button {
+                transition: .3s;
+                opacity: 1;
+            }
+        }
+    }
+    zgroup {
+        position: relative;
+        > button {
+            transition: .3s;
+            opacity: 0;
+            width: fit-content;
+            height: fit-content;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
     .selected {
         background-color: $primary-500;
     }
@@ -27,6 +62,7 @@
         width: fit-content;
         display: flex;
         flex-direction: column;
+        flex: 1;
     }
     dot {
         background-color: $primary-300;
@@ -58,6 +94,7 @@
         align-items: center;
     }
     img {
+        transition: .3s;
         border: solid;
         width: 50vh;
         height: 50vh;
