@@ -15,6 +15,13 @@
     let editDesc = false;
     let titleForm: HTMLFormElement;
     let descForm: HTMLFormElement;
+    let editImage: HTMLInputElement;
+    let addImage: HTMLInputElement;
+    let editSubmit: HTMLFormElement;
+    let addSubmit: HTMLFormElement;
+    let editFiles: FileList;
+    let addFiles: FileList;
+    let image: string;
 
     let product = data.product as Product;
 
@@ -28,6 +35,8 @@
     let reviewRating = 0;
     let root = 0;
     let posX = 0;
+
+    let splashEdit = false;
     const setRoot = (event: MouseEvent) => {
         root = event.clientX;
     }
@@ -52,11 +61,27 @@
         count = 0;
     }
     const editSplashes = () => {
-        console.log("cum");
+        splashEdit = true;
     }
     $: relPosX = posX - root;
     $: isHalf = relPosX < 0 ? relPosX + 30 < 15 : relPosX < 15;
     $: rating = reviewRating >= 0 ? reviewRating + (isHalf ? 0.5 : 1) : 0;
+    $: if (editFiles) {
+        const reader = new FileReader();
+        reader.readAsDataURL(editFiles[0]);
+        reader.onload = e => {
+            image = (<string> e.target?.result).split(',')[1];
+            addSubmit.submit();
+        };
+    }
+    $: if (addFiles) {
+        const reader = new FileReader();
+        reader.readAsDataURL(editFiles[0]);
+        reader.onload = e => {
+            image = (<string> e.target?.result).split(',')[1];
+            editSubmit.submit();
+        };
+    }
 </script>
 
 <form class="hidden" id="save" action="?/save" method="POST">
@@ -73,6 +98,43 @@
     <input name="desc" value={product.description}/>
     <input name="pid" value={product.product_id}/>
 </form>
+
+<form method="POST" action="?/editImage" bind:this={editSubmit}>
+    <input type="hidden" name="image" value={image}/>
+</form>
+
+<form method="POST" action="?/addImage" bind:this={addSubmit}>
+    <input type="hidden" name="image" value={image}/>
+</form>
+
+<input class="hidden" type="file" bind:this={editImage} bind:files={editFiles}/>
+<input class="hidden" type="file" bind:this={addImage} bind:files={addFiles}/>
+
+{#if splashEdit}
+<dialog open>
+    <article>
+        <header>
+            <a class="close" href={'#'} on:click={() => {splashEdit = false}}> </a>
+            Edit Splashes
+        </header>
+        <form>
+            <grid>
+                {#each [...splashes, 'plus'] as splash}
+                {#if splash == 'plus'}
+                    <clicker on:click={editImage.click()} on:keydown>
+                        <img src="/plus.png" alt=""/>
+                    </clicker>
+                    {:else}
+                    <clicker on:click={addImage.click()} on:keydown>
+                        <img src={splash} alt=""/>
+                    </clicker>
+                    {/if}
+                {/each}
+            </grid>
+        </form>
+    </article>
+</dialog>
+{/if}
 
 {#if confirm}
 <dialog open>
@@ -222,6 +284,33 @@
     }
     .selected {
         color: $primary-500;
+    }
+    clicker {
+        display: inline;
+        padding: 0;
+        margin: 0;
+        width: calc(100%/4 - .3rem);
+    }
+    grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .3rem;
+        align-items: center;
+    }
+    img {
+        transition: .3s;
+        width: 100%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        &:hover {
+            transition: .3s;
+            transform: scale(1.1);
+        }
+        &[src="/plus.png"] {
+            width: 5rem;
+            height: 5rem;
+            margin-left: 1.4rem;
+        }
     }
     iconify-icon {
         &[icon="lucide:pencil"] {

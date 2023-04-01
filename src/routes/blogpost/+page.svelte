@@ -1,6 +1,7 @@
 <script lang="ts">
     import { redirect } from '@sveltejs/kit';
 	import Quill from "quill";
+    import { page } from '$app/stores';
 	let quill:any = null;
     let image: string;
 
@@ -8,6 +9,7 @@
 
     if (!data.blog) throw redirect(302, '/blog');
 
+    
     let fallback = '/splashes/weed-1.jpg';
     let blog = data.blog;
     let files: FileList;
@@ -15,6 +17,9 @@
     let edit = false;
     let title = blog.title;
     let editor: HTMLDivElement;
+
+    let isOp = $page.data.user.uid == blog.uid;
+    
     const getContent = async () => {
         content = await fetch(`${blog.text}.html`).then(async (response) => {
             if(response.status == 200){
@@ -74,6 +79,7 @@
             </h1>
             <h2>by {blog.name} (@{blog.username})</h2>
         </hgroup>
+        {#if isOp}
         <button on:click={() => {if (edit) submitEdit(); else edit = true;}}>
             {#if edit}
                 <iconify-icon icon="lucide:check-circle-2"/>
@@ -83,6 +89,7 @@
                 Edit
             {/if}
         </button>
+        {/if}
     </vgroup>
     <zgroup class:edit>
         <img src={blog.thumbnail} alt="" {...{onerror: `this.onerror=null;this.src='${fallback}'`}}/>

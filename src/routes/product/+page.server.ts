@@ -2,6 +2,7 @@ import { db } from '$lib/database';
 import type { Product, Review } from '$lib/types';
 import { fail, redirect, type Action, type Actions } from '@sveltejs/kit';
 import type { RowDataPacket } from 'mysql2/promise';
+import { writeFile } from 'fs/promises';
 
 export const prerender = false;
 
@@ -101,4 +102,13 @@ const save: Action = async ({ request, cookies }) => {
     throw redirect(302, `/product?pid=${product_id}`)
 }
 
-export const actions: Actions = { review, save, updateTitle, updateDesc }
+const editImage: Action = async ({ request }) => {
+    const data = await request.formData();
+
+}
+
+const addImage: Action = async ({ request }) => {
+    const data = await request.formData();
+}
+
+export const actions: Actions = { review, save, updateTitle, updateDesc, editImage, addImage }
