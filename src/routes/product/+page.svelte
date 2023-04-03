@@ -7,6 +7,7 @@
     import { page } from '$app/stores';
 
     export let data;
+    export let form;
 
     let user = $page.data.user;
     $: utype = user.utype;
@@ -15,13 +16,12 @@
     let editDesc = false;
     let titleForm: HTMLFormElement;
     let descForm: HTMLFormElement;
-    let editImage: HTMLInputElement;
-    let addImage: HTMLInputElement;
-    let editSubmit: HTMLFormElement;
-    let addSubmit: HTMLFormElement;
-    let editFiles: FileList;
-    let addFiles: FileList;
+    let splashChange: HTMLFormElement;
+    let openImgSel: HTMLInputElement;
+    let imageInput: HTMLInputElement;
+    let files: FileList;
     let image: string;
+    let lecock = false;
 
     let product = data.product as Product;
 
@@ -35,6 +35,10 @@
     let reviewRating = 0;
     let root = 0;
     let posX = 0;
+
+    let ifNew = "";
+
+    let selectName: string;
 
     let splashEdit = false;
     const setRoot = (event: MouseEvent) => {
@@ -66,21 +70,19 @@
     $: relPosX = posX - root;
     $: isHalf = relPosX < 0 ? relPosX + 30 < 15 : relPosX < 15;
     $: rating = reviewRating >= 0 ? reviewRating + (isHalf ? 0.5 : 1) : 0;
-    $: if (editFiles) {
+    $: if (files) {
         const reader = new FileReader();
-        reader.readAsDataURL(editFiles[0]);
+        reader.readAsDataURL(files[0]);
         reader.onload = e => {
             image = (<string> e.target?.result).split(',')[1];
-            addSubmit.submit();
+            setTimeout(() => {
+                // lecock = true;
+                splashChange.submit();
+            }, 0)
         };
     }
-    $: if (addFiles) {
-        const reader = new FileReader();
-        reader.readAsDataURL(editFiles[0]);
-        reader.onload = e => {
-            image = (<string> e.target?.result).split(',')[1];
-            editSubmit.submit();
-        };
+    $: if (lecock) {
+        splashChange.submit();
     }
 </script>
 
@@ -99,16 +101,18 @@
     <input name="pid" value={product.product_id}/>
 </form>
 
-<form method="POST" action="?/editImage" bind:this={editSubmit}>
-    <input type="hidden" name="image" value={image}/>
+<form class="hidden" method="POST" action="?/splashChange" bind:this={splashChange}>
+    <input name="image" value={image} bind:this={imageInput}>
+    <input name="filename" value={selectName}/>
+    <input name="product_id" value={product.product_id}/>
+    <input name="ifNew" value={ifNew}/>
 </form>
 
-<form method="POST" action="?/addImage" bind:this={addSubmit}>
-    <input type="hidden" name="image" value={image}/>
-</form>
-
-<input class="hidden" type="file" bind:this={editImage} bind:files={editFiles}/>
-<input class="hidden" type="file" bind:this={addImage} bind:files={addFiles}/>
+<input  class="hidden" 
+        type="file" 
+        accept="image/png, image/jpeg"
+        bind:files 
+        bind:this={openImgSel}/>
 
 {#if splashEdit}
 <dialog open>
@@ -121,11 +125,20 @@
             <grid>
                 {#each [...splashes, 'plus'] as splash}
                 {#if splash == 'plus'}
-                    <clicker on:click={editImage.click()} on:keydown>
+                    <clicker on:click={() => {
+                        openImgSel.click();
+                        //TODO: stop assuming all files are jpg
+                        selectName = `/splash/${product.product_id}/${splashes.length + 1}.jpg`
+                        ifNew = "true";
+                    }} on:keydown>
                         <img src="/plus.png" alt=""/>
                     </clicker>
                     {:else}
-                    <clicker on:click={addImage.click()} on:keydown>
+                    <clicker on:click={() => {
+                        openImgSel.click();
+                        selectName = splash;
+                        ifNew = "";
+                    }} on:keydown>
                         <img src={splash} alt=""/>
                     </clicker>
                     {/if}

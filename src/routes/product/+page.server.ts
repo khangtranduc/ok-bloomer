@@ -2,6 +2,7 @@ import { db } from '$lib/database';
 import type { Product, Review } from '$lib/types';
 import { fail, redirect, type Action, type Actions } from '@sveltejs/kit';
 import type { RowDataPacket } from 'mysql2/promise';
+import path from 'path';
 import { writeFile } from 'fs/promises';
 
 export const prerender = false;
@@ -85,8 +86,6 @@ const review: Action = async ({ request, cookies }) => {
         (?, ?, ?, ?, ?)
     `, [uid, product_id, title, text, rating]);
 
-    // const [reviews, x] = await db.execute<RowDataPacket[]>('select review.*, username from review, user where product_id = ? and buid = uid', [product_id]);
-
     throw redirect(302, `/product?pid=${product_id}`)
 }
 
@@ -102,13 +101,34 @@ const save: Action = async ({ request, cookies }) => {
     throw redirect(302, `/product?pid=${product_id}`)
 }
 
-const editImage: Action = async ({ request }) => {
+const splashChange: Action = async ({ request }) => {
     const data = await request.formData();
+    const filename = data.get('filename');
+    const image = data.get('image');
+    const product_id = data.get('product_id');
+    const ifNew = data.get('ifNew');
 
+    // throw redirect(302, `/product?pid=${product_id}&cock=${image}`);
+
+    if (typeof image !== 'string' || typeof filename !== 'string')
+        return fail(400, { notString: true });
+
+    const filePath = path.join(
+        process.cwd(),
+        'static',
+        filename
+    );
+
+    await writeFile(filePath, image, 'base64');
+
+    if (!!ifNew){
+        db.execute(`
+            insert into splash (product_id) values
+            (?)
+        `, [product_id]);
+    }
+
+    throw redirect(302, `/product?pid=${product_id}`);
 }
 
-const addImage: Action = async ({ request }) => {
-    const data = await request.formData();
-}
-
-export const actions: Actions = { review, save, updateTitle, updateDesc, editImage, addImage }
+export const actions: Actions = { review, save, updateTitle, updateDesc, splashChange }
