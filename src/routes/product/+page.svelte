@@ -7,7 +7,6 @@
     import { page } from '$app/stores';
 
     export let data;
-    export let form;
 
     let user = $page.data.user;
     $: utype = user.utype;
@@ -19,9 +18,9 @@
     let splashChange: HTMLFormElement;
     let openImgSel: HTMLInputElement;
     let imageInput: HTMLInputElement;
+    let deleteImg: HTMLFormElement;
     let files: FileList;
     let image: string;
-    let lecock = false;
 
     let product = data.product as Product;
 
@@ -39,6 +38,8 @@
     let ifNew = "";
 
     let selectName: string;
+    let deleteName: string;
+    let sid: number;
 
     let splashEdit = false;
     const setRoot = (event: MouseEvent) => {
@@ -76,19 +77,21 @@
         reader.onload = e => {
             image = (<string> e.target?.result).split(',')[1];
             setTimeout(() => {
-                // lecock = true;
                 splashChange.submit();
             }, 0)
         };
-    }
-    $: if (lecock) {
-        splashChange.submit();
     }
 </script>
 
 <form class="hidden" id="save" action="?/save" method="POST">
     <input name="exists" value={isSaved}/>
     <input name="product_id" value={product.product_id}/>
+</form>
+
+<form class="hidden" action="?/deleteImg" method="POST" bind:this={deleteImg}>
+    <input name="filename" value={deleteName}/>
+    <input name="product_id" value={product.product_id}/>
+    <input name="sid" value={sid}/>
 </form>
 
 <form class="hidden" method="POST" action="?/updateTitle" bind:this={titleForm}>
@@ -123,7 +126,7 @@
         </header>
         <form>
             <grid>
-                {#each [...splashes, 'plus'] as splash}
+                {#each [...splashes, 'plus'] as splash, i}
                 {#if splash == 'plus'}
                     <clicker on:click={() => {
                         openImgSel.click();
@@ -134,12 +137,20 @@
                         <img src="/plus.png" alt=""/>
                     </clicker>
                     {:else}
-                    <clicker on:click={() => {
-                        openImgSel.click();
-                        selectName = splash;
-                        ifNew = "";
-                    }} on:keydown>
-                        <img src={splash} alt=""/>
+                    <clicker>
+                        <img src={splash} alt="" on:click={() => {
+                            openImgSel.click();
+                            selectName = splash;
+                            ifNew = "";
+                        }} on:keydown/>
+                        <iconify-icon 
+                                icon="lucide:trash-2" 
+                                on:mouseenter={() => {
+                                    deleteName = splash;
+                                    sid = i + 1
+                                }} 
+                                on:click={deleteImg.submit()}
+                                on:keydown/>
                     </clicker>
                     {/if}
                 {/each}
@@ -300,9 +311,24 @@
     }
     clicker {
         display: inline;
+        position: relative;
         padding: 0;
         margin: 0;
         width: calc(100%/4 - .3rem);
+        iconify-icon {
+            position: absolute;
+            top: 5%;
+            left: 80%;
+            background: $primary-500;
+            color: white;
+            padding: .1rem;
+            border-radius: 5px;
+            transition: .3s;
+            &:hover {
+                transform: scale(1.1);
+                transition: .3s;
+            }
+        }
     }
     grid {
         display: flex;

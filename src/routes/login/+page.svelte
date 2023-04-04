@@ -1,4 +1,10 @@
 <script>
+    import { onMount } from 'svelte';
+
+    onMount(() => {
+        sessionStorage.clear();
+    })
+    
     export let form;
 </script>
 

@@ -11,6 +11,8 @@
 
     let fallback = '/thumbs/dogtail.png';
 
+    let infoChange: HTMLFormElement;
+
     $: utype = user?.utype;
 
     let labels = [
@@ -51,14 +53,20 @@
                 <th scope="row">{info[0]}</th>
                 <td>
                     {#if edit[i]}
-                        <form method="POST" action="?/updateInfo">
+                        <form method="POST" action="?/updateInfo" bind:this={infoChange}>
                             <input type="hidden" name="field" id="field" value={info[2]}/>
                             <input name="value" id="value" value={info[1]}/>
                         </form>
                     {:else}
                         {info[1]}
                     {/if}
-                    <iconify-icon icon="lucide:pencil" on:click={()=>edit[i] = !edit[i]} on:keydown/>
+                    <iconify-icon icon="lucide:pencil" on:click={()=>{
+                        if (!edit[i]) edit[i] = true;
+                        else {
+                            edit[i] = false;
+                            infoChange.submit();
+                        }
+                    }} on:keydown/>
                 </td>
                 </tr>
             {/each}

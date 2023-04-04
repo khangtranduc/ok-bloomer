@@ -3,7 +3,7 @@ import type { Product, Review } from '$lib/types';
 import { fail, redirect, type Action, type Actions } from '@sveltejs/kit';
 import type { RowDataPacket } from 'mysql2/promise';
 import path from 'path';
-import { writeFile } from 'fs/promises';
+import { writeFile, unlink } from 'fs/promises';
 
 export const prerender = false;
 
@@ -131,4 +131,31 @@ const splashChange: Action = async ({ request }) => {
     throw redirect(302, `/product?pid=${product_id}`);
 }
 
-export const actions: Actions = { review, save, updateTitle, updateDesc, splashChange }
+const deleteImg: Action = async ({ request }) => {
+    const data = await request.formData();
+    const sid = data.get('sid');
+    const filename = data.get('filename');
+    const product_id = data.get('product_id');
+
+    if (typeof sid !== 'string' 
+        || typeof filename !== 'string' 
+        || typeof product_id !== 'string')
+        return fail(400, { error: true });
+
+    const filePath = path.join(
+        process.cwd(),
+        'static',
+        filename
+    )
+
+    await unlink(filePath);
+
+    await db.execute(`
+        delete from splash
+        where product_id = ? and sid = ?
+    `, [product_id, sid]);
+
+    throw redirect(302, `/product?pid=${product_id}`);
+}
+
+export const actions: Actions = { review, save, updateTitle, updateDesc, splashChange, deleteImg }

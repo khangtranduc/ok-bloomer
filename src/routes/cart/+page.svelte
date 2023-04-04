@@ -1,6 +1,5 @@
 <script lang="ts">
     import { cart } from '$lib/stores';
-    import { redirect } from '@sveltejs/kit';
 
     export let data;
     export let form;
@@ -73,11 +72,18 @@
             </tr>
         </thead>
         <tbody>
-            {#each $cart as item}
+            {#each $cart as item, i}
                 <tr>
-                    <td>{item.name}</td>
+                    <td><a href={`/product?pid=${item.product_id}`}>{item.name}</a></td>
                     <td>{item.count}</td>
-                    <td>${(item.count * item.price).toFixed(2)}</td>
+                    <td>
+                        <vgroup>
+                            ${(item.count * item.price).toFixed(2)}
+                            <iconify-icon icon="lucide:trash-2" on:keydown on:click = {() => {
+                                $cart = [...$cart.slice(0, i), ...$cart.slice(i + 1)]
+                            }}/>
+                        </vgroup>
+                    </td>
                 </tr>
             {/each}
         </tbody>
@@ -95,6 +101,18 @@
 </main>
 
 <style lang="scss">
+    vgroup {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        iconify-icon {
+            transition: .3s;
+            &:hover {
+                transition: .3s;
+                transform: scale(1.1);
+            }
+        }
+    }
     header {
         margin-bottom: .3rem;
     }
