@@ -2,6 +2,7 @@
     import { goto } from '$app/navigation';
     import Star from './star.svelte';
     import { products, query } from '$lib/stores';
+    import Filter from './filter.svelte';
 
     export let form;
 
@@ -9,32 +10,42 @@
     if (form?.query) $query = form.query;
 
     let fallback = '/thumbs/dogtail.png';
+
+    $: categories = $products.map(x => x.category).reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map());
+    $: min = $products.length? $products.map(x => x.price).reduce((acc, e) => {return acc < e ? acc : e}) : 0;
+    $: max = $products.map(x => x.price).reduce((acc, e) => {return acc > e ? acc : e}, 0);
 </script>
 
 <main class="container-fluid">
     <h1>Our Products</h1>
-    <catalog class="flex">
-        {#each $products as product}
-        <article on:click={() => goto(`/product/?pid=${product.product_id}`)} on:keydown>
-            <img alt="" src={product.thumbnail} {...{onerror: `this.onerror=null;this.src='${fallback}'`}}/>
-            <h4>{product.name}</h4>
-            <vgroup>
-                <div>
-                    <Star stars={+product.rating.toFixed(2)}/>
-                    <mark>{product.category}</mark>
-                </div>
-                <div>
-                    Stocks: {product.stock}
-                    <h5 class="gradient">${product.price.toFixed(2)}</h5>
-                </div>
-            </vgroup>
-        </article>
-        {/each}
-    </catalog>
+    <vgroup>
+        <Filter {categories} {min} {max}/>
+        <catalog>
+            {#each $products as product}
+            <article on:click={() => goto(`/product/?pid=${product.product_id}`)} on:keydown>
+                <img alt="" src={product.thumbnail} {...{onerror: `this.onerror=null;this.src='${fallback}'`}}/>
+                <h4>{product.name}</h4>
+                <vgroup>
+                    <div>
+                        <Star stars={+product.rating.toFixed(2)}/>
+                        <mark>{product.category}</mark>
+                    </div>
+                    <div>
+                        Stocks: {product.stock}
+                        <h5 class="gradient">${product.price.toFixed(2)}</h5>
+                    </div>
+                </vgroup>
+            </article>
+            {/each}
+        </catalog>
+    </vgroup>
 </main>
 
 <style lang="scss">
-    .flex {
+    .gradient {
+        @include gradient()
+    }
+    catalog {
         display: flex;
         width: 100vw;
         flex-flow: row wrap;
@@ -46,8 +57,9 @@
             align-items: center;
         }
     }
-    .gradient {
-        @include gradient()
+    hgroup {
+        margin-right: 3rem;
+        border: solid;
     }
     h4 {
         width: 100%;
@@ -69,12 +81,12 @@
     article {
         background-color: $card-bg;
         margin: 0;
-        width: calc(100vw/6 - .6rem);
+        width: calc(100%/6 - .6rem);
         padding: 0;
         transition: .3s;
         
         @include media(lg) {
-            width: calc(100vw/3 - .8rem);
+            width: calc(100%/3 - .8rem);
         }
 
         @include media(md) {

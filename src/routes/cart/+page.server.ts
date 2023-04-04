@@ -37,6 +37,11 @@ const order: Action = async ({ request, cookies }) => {
             insert into payment (order_id, buid, suid, method, amount) values
             (?, ?, ?, ?, ?)
         `, [order_id, uid, cart[i].suid, method, cart[i].price * cart[i].count]);
+        await db.execute(`
+            update product
+            set stock = stock - ?
+            where product_id = ?
+        `, [cart[i].count, cart[i].product_id])
     }
 
     return { success: true };

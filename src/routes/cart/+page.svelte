@@ -11,9 +11,11 @@
     let success = form?.success ?? false;
     let confirm = false;
     let methods = data.methods;
-    let sum = 0;
-    let sc = 0
-    $cart.forEach(x => {sum += x.count * x.price; sc += x.count});
+    // let sum = 0;
+    // let sc = 0
+    // $cart.forEach(x => {sum += x.count * x.price; sc += x.count});
+    $: sc = $cart.map(x => x.count).reduce((acc, res) => {return acc + res}, 0);
+    $: sum = $cart.map(x => x.count * x.price).reduce((acc, res) => {return acc + res}, 0);
 </script>
 
 {#if success}

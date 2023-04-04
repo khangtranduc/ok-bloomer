@@ -80,3 +80,8 @@ export type Blog = {
     thumbnail: string,
     timeStamp: number
 }
+
+export type Category = {
+    category: string,
+    count: number
+}
