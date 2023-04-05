@@ -3,7 +3,7 @@ import type { Product, Review } from '$lib/types';
 import { fail, redirect, type Action, type Actions } from '@sveltejs/kit';
 import type { RowDataPacket } from 'mysql2/promise';
 import path from 'path';
-import { writeFile, unlink } from 'fs/promises';
+import { writeFile, unlink, mkdir } from 'fs/promises';
 
 export const prerender = false;
 
@@ -45,6 +45,40 @@ const updateTitle: Action = async ({ request }) => {
         set name = ?
         where product_id = ?
     `, [title, pid]);
+
+    throw redirect(302, `/product?pid=${pid}`)
+}
+
+const updatePrice: Action = async ({ request }) => {
+    const data = await request.formData();
+    const price = data.get('price');
+    const pid = data.get('pid');
+
+    if (typeof price !== 'string' || typeof pid !== 'string' || !price || !pid)
+        return fail(400, { error: true })
+
+    await db.execute(`
+        update product
+        set price = ?
+        where product_id = ?
+    `, [price, pid]);
+
+    throw redirect(302, `/product?pid=${pid}`)
+}
+
+const updateStock: Action = async ({ request }) => {
+    const data = await request.formData();
+    const stock = data.get('stock');
+    const pid = data.get('pid');
+
+    if (typeof stock !== 'string' || typeof pid !== 'string' || !stock || !pid)
+        return fail(400, { error: true })
+
+    await db.execute(`
+        update product
+        set stock = ?
+        where product_id = ?
+    `, [stock, pid]);
 
     throw redirect(302, `/product?pid=${pid}`)
 }
@@ -119,6 +153,8 @@ const splashChange: Action = async ({ request }) => {
         filename
     );
 
+    await mkdir(filePath.split('\\').slice(0,-1).join('\\'), { recursive: true })
+
     await writeFile(filePath, image, 'base64');
 
     if (!!ifNew){
@@ -158,4 +194,13 @@ const deleteImg: Action = async ({ request }) => {
     throw redirect(302, `/product?pid=${product_id}`);
 }
 
-export const actions: Actions = { review, save, updateTitle, updateDesc, splashChange, deleteImg }
+export const actions: Actions = { 
+    review, 
+    save, 
+    updateTitle, 
+    updateDesc, 
+    updatePrice,
+    updateStock,
+    splashChange, 
+    deleteImg
+}

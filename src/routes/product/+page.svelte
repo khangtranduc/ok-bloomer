@@ -13,8 +13,12 @@
 
     let editTitle = false;
     let editDesc = false;
+    let editPrice = false;
+    let editStock = false;
     let titleForm: HTMLFormElement;
     let descForm: HTMLFormElement;
+    let priceForm: HTMLFormElement;
+    let stockForm: HTMLFormElement;
     let splashChange: HTMLFormElement;
     let openImgSel: HTMLInputElement;
     let imageInput: HTMLInputElement;
@@ -101,6 +105,16 @@
 
 <form class="hidden" method="POST" action="?/updateDesc" bind:this={descForm}>
     <input name="desc" value={product.description}/>
+    <input name="pid" value={product.product_id}/>
+</form>
+
+<form class="hidden" method="POST" action="?/updatePrice" bind:this={priceForm}>
+    <input name="price" value={product.price}/>
+    <input name="pid" value={product.product_id}/>
+</form>
+
+<form class="hidden" method="POST" action="?/updateStock" bind:this={stockForm}>
+    <input name="stock" value={product.stock}/>
     <input name="pid" value={product.product_id}/>
 </form>
 
@@ -256,16 +270,52 @@
                 <p>
                     {#if editDesc}
                         <textarea bind:value={product.description}/>
-                    {:else}
+                    {:else if product.description}
                         {product.description}
+                    {:else}
+                        <i>Empty Description</i>
                     {/if}
                 </p>
             </hgroup>
-            {#if utype != 'seller'}
             <div>
                 <hgroup>
-                    <h1>Price: ${product.price.toFixed(2)}</h1>
-                    <p>Stock left: {product.stock}</p>
+                    <h1>
+                        Price: 
+                        {#if editPrice}
+                            <input bind:value={product.price}/>
+                        {:else}
+                            ${product.price.toFixed(2)}
+                        {/if}
+                        {#if utype == 'seller'}
+                            <iconify-icon icon="lucide:pencil" on:keydown
+                                on:click={() => {
+                                    if (!editPrice) editPrice = true
+                                    else {
+                                        editPrice = false;
+                                        priceForm.submit();
+                                    }
+                                }}/>
+                        {/if}
+                    </h1>
+                    <p>
+                        Stock left: 
+                        {#if editStock}
+                            <input bind:value={product.stock}/>
+                        {:else}
+                            {product.stock}
+                        {/if}
+                        {#if utype == 'seller'}
+                            <iconify-icon icon="lucide:pencil" on:keydown
+                                on:click={() => {
+                                    if (!editStock) editStock = true;
+                                    else {
+                                        editStock = false;
+                                        stockForm.submit();
+                                    }
+                                }}/>
+                        {/if}
+                    </p>
+                    {#if utype != 'seller'}
                     <spinner>
                         <span>Count:</span>
                         <iconify-icon 
@@ -275,13 +325,15 @@
                             <input bind:value={count} on:change={() => count = count % product.stock}/>
                         <iconify-icon icon="lucide:plus" on:keydown on:click={() => count = (count + 1) % (product.stock + 1)}/>
                     </spinner>
+                    {/if}
                 </hgroup>
+                {#if utype != 'seller'}
                 <button on:click={addToCart}>
                     Add to Cart
                     <iconify-icon icon="lucide:shopping-cart"/>
                 </button>
+                {/if}
             </div>
-            {/if}
         </div>
     </vgroup>
     <vflex>
@@ -308,6 +360,9 @@
     }
     .selected {
         color: $primary-500;
+    }
+    article {
+        min-width: 10vw;
     }
     clicker {
         display: inline;
@@ -346,8 +401,10 @@
             transform: scale(1.1);
         }
         &[src="/plus.png"] {
-            width: 5rem;
-            height: 5rem;
+            min-width: 5rem;
+            min-height: 5rem;
+            max-width: 5rem;
+            max-height: 5rem;
             margin-left: 1.4rem;
         }
     }
@@ -421,6 +478,12 @@
     }
     p {
         margin-bottom: 0;
+        > input {
+            width: 3rem;
+            padding: 0;
+            height: fit-content;
+            text-align: center;
+        }
     }
     list {
         display: flex;

@@ -26,10 +26,9 @@
     $: $products.forEach((curr, i, _) => {
         if (i == 0) N = 0;
         if ((selected.size == 0 || selected.has(curr.category)) 
-                && curr.price <= Math.round(price)
-                && (curr.rating >= rating || rating == 0.5)
-                && ((stock && curr.stock > 0) || !stock))
-                N += 1
+            && curr.price <= Math.round(price)
+            && (curr.rating >= rating || rating == 0.5)
+            && ((stock && curr.stock > 0) || !stock)) N += 1
     })
 </script>
 
