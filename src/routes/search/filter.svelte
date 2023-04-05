@@ -4,11 +4,17 @@
     export let max: number;
 
     let range: HTMLInputElement;
-    let cock: number = (min + max)/2;
+    export let price: number = max;
 
     let reviewRating = 0;
     let root = 0;
     let posX = 0;
+
+    export let selected = new Set<string>();
+    export let rating: number;
+    export let stock = false;
+
+    let checked = new Array([...categories.keys()].length).fill(false);
 
     const setRoot = (event: MouseEvent) => {
         root = event.clientX;
@@ -25,10 +31,21 @@
     <h2><u>Filters</u></h2>
     <details>
         <summary>Category</summary>
-        {#each [...categories.keys()] as cat}
+        {#each [...categories.keys()] as cat, i}
         <vgroup>
             <label>
-                <input type="checkbox" name={cat.toLowerCase()}>
+                <input type="checkbox" on:change={() => {
+                    if (!checked[i]) {
+                        selected.add(cat);
+                        selected = new Set(selected);
+                        checked[i] = true;
+                    }
+                    else {
+                        selected.delete(cat);
+                        selected = new Set(selected);
+                        checked[i] = false;
+                    }
+                }}>
                 {cat}
             </label>
             <mark>{categories.get(cat)}</mark>
@@ -36,7 +53,7 @@
         {/each}
     </details>
     <label>
-        Price: <mark>${cock?.toFixed(2)}</mark>
+        Price: <mark>${price?.toFixed(2)}</mark>
         <vgroup>
             <span><i>${Math.floor(min)}</i></span>
             <span><i>${Math.ceil(max)}</i></span>
@@ -45,9 +62,9 @@
                 type="range" 
                 bind:this={range} 
                 min={min} max={max} 
-                value={(min + max)/2} 
+                value={price} 
                 name="price"
-                on:input={() => cock = +range.value}>
+                on:input={() => price = +range.value}/>
         <hr>
     </label>
     <label>
@@ -72,7 +89,7 @@
     </stargroup>
     <hr>
     <label>
-        <input type="checkbox"/>
+        <input type="checkbox" bind:checked={stock}/>
         In Stock
     </label>
 </form>

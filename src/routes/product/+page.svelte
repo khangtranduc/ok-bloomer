@@ -271,9 +271,9 @@
                         <iconify-icon 
                             icon="lucide:minus" 
                             on:keydown 
-                            on:click={() => count = ((count - 1) % product.stock + product.stock) % product.stock}/>
+                            on:click={() => count = ((count - 1) % (product.stock + 1) + (product.stock + 1)) % (product.stock + 1)}/>
                             <input bind:value={count} on:change={() => count = count % product.stock}/>
-                        <iconify-icon icon="lucide:plus" on:keydown on:click={() => count = (count + 1) % product.stock}/>
+                        <iconify-icon icon="lucide:plus" on:keydown on:click={() => count = (count + 1) % (product.stock + 1)}/>
                     </spinner>
                 </hgroup>
                 <button on:click={addToCart}>
