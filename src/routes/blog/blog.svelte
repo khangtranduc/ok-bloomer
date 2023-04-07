@@ -39,6 +39,7 @@
     }
     img {
         width: 6rem;
+        height: 6rem;
         object-fit: cover;
         border-radius: 5px 0 0 5px;
     }

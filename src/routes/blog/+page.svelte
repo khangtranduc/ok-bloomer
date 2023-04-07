@@ -23,7 +23,7 @@
     <article>
         <header>
             <a class="close" href={'#'} on:click={() => open = false}> </a>
-            Open a New Thread!
+            Open a New Blog!
         </header>
         <form method="POST" action="?/newBlog">
             <label>
@@ -50,7 +50,7 @@
             <h2>Read what your fellow botanists has to say :)</h2>
         </hgroup>
         <form>
-            <input bind:value={searchQuery} type="search" placeholder="Search Threads..."/>
+            <input bind:value={searchQuery} type="search" placeholder="Search Blogs..."/>
         </form>
     </vgroup>
     {#each blogs as blog}
