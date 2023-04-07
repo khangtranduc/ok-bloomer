@@ -28,13 +28,15 @@
     <li><a href="/about">About</a></li>
     <li><a href="/contact">Contact</a></li>
     <li><a href="/thread">Threads</a></li>
+    <li><a href="/blog">Blogs</a></li>
     {#if utype == 'buyer'}
       <li><a href="/saved">Saved</a></li>
+    {:else if utype == 'admin'}
+      <li><a href="/aspace">AdminSpace</a></li>
     {/if}
-    <li><a href="/blog">Blogs</a></li>
   </ul>
   <ul>
-    {#if utype == 'buyer'}
+    {#if utype != 'seller' && utype != 'admin'}
     <li>
       <form action='/search?/search' method='POST'>
         <input bind:value={queryString} type="search" id="query" name="query" placeholder="Search">
@@ -96,6 +98,11 @@
 <slot />
 
 <style lang="scss">
+  a[href='/aspace'] {
+    color: red;
+    font-weight: bold;
+  }
+
   ul {
     &:first-child {
       transition: .3s;

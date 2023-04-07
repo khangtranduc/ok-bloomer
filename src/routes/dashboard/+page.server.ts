@@ -110,4 +110,18 @@ const updateInfo: Action = async ({ request, cookies }) => {
     return { success: true }
 }
 
-export const actions: Actions = { updateInfo, addProduct, deleteProduct }
+const deleteAcc: Action = async ({ locals, cookies }) => {
+    const uid = locals.user.uid;
+
+    locals.user = null;
+    cookies.delete('session');
+
+    await db.execute(`
+        delete from user
+        where uid = ?
+    `, [uid]);
+
+    throw redirect(302, '/');
+}
+
+export const actions: Actions = { updateInfo, addProduct, deleteProduct, deleteAcc }

@@ -77,7 +77,7 @@
                     {blog.title}
                 {/if}
             </h1>
-            <h2>by {blog.name} (@{blog.username})</h2>
+            <h2>by {blog.name} (<a href={`/window?uid=${blog.uid}`}>@{blog.username}</a>)</h2>
         </hgroup>
         {#if isOp}
         <button on:click={() => {if (edit) submitEdit(); else edit = true;}}>

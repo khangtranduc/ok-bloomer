@@ -1,5 +1,8 @@
 <script lang="ts">
     import { page } from '$app/stores';
+    import { query } from '$lib/stores';
+
+    $query = "";
 
     let user = $page.data.user;
     $: utype = user?.utype;
@@ -12,7 +15,11 @@
 
 <div class="title">
     <h1 class="gradient">OK, Bloomer!</h1>
-    <p>Your one stop shop for everything <span class="gradient">botany</span></p>
+    {#if utype != 'admin'}
+        <p>Your one stop shop for everything <span class="gradient">botany</span></p>
+    {:else}
+        <p>Welcome admin {`${user.fname} ${user.lname}`}</p>
+    {/if}
     {#if utype == 'seller'}
     <form action="/dashboard">
         <button type="submit">
@@ -20,7 +27,7 @@
             <iconify-icon icon="lucide:arrow-right" width="25"/>
         </button>
     </form>
-    {:else}
+    {:else if utype != 'admin'}
     <form action="/search?/all" method="POST">
         <button type="submit">
             <span>Explore our catalogs</span>

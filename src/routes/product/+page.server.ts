@@ -17,7 +17,11 @@ export const load = async ({ url, cookies }) => {
 
     const [reviews, x] = await db.execute<RowDataPacket[]>('select review.*, username from review, user where product_id = ? and buid = uid', [pid]);
     const [rows, y] = await db.execute<RowDataPacket[]>('select concat("/splash/", product_id, "/", sid, ".jpg") as src from splash where product_id = ?', [pid]);
-    const [exist, z] = await db.execute<RowDataPacket[]>('select exists(select * from save where buid = ? and product_id = ?) exist', [uid, pid])
+    let saved = false;
+    if (uid){
+        const [exist, z] = await db.execute<RowDataPacket[]>('select exists(select * from save where buid = ? and product_id = ?) exist', [uid, pid])
+        saved = <boolean> exist[0].exist
+    }
 
     const splashes: string[] = [];
 
@@ -28,7 +32,7 @@ export const load = async ({ url, cookies }) => {
         product: <Product> product[0],
         reviews: <Review[]> reviews,
         splashes: splashes,
-        saved: <boolean> exist[0].exist
+        saved: saved
     }
 }
 

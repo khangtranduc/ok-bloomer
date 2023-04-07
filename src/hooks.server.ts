@@ -14,6 +14,10 @@ const sellerProtected = [
     '/saved'
 ]
 
+const adminOnly = [
+    '/aspace'
+]
+
 const loggedoutProtected = [
     '/dashboard'
 ]
@@ -48,7 +52,10 @@ export const handle: Handle = async ({event, resolve}) => {
         }
     }
 
-    if (event.locals.user.utype == 'seller' && sellerProtected.includes(event.url.pathname))
+    if (event.locals.user?.utype == 'seller' && sellerProtected.includes(event.url.pathname))
+        throw redirect(302, '/')
+
+    if (adminOnly.includes(event.url.pathname) && event.locals.user?.utype != 'admin')
         throw redirect(302, '/')
 
     return await resolve(event);

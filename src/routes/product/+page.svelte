@@ -9,7 +9,7 @@
     export let data;
 
     let user = $page.data.user;
-    $: utype = user.utype;
+    $: utype = user?.utype ?? "invalid";
 
     let editTitle = false;
     let editDesc = false;
@@ -234,11 +234,11 @@
             {:else}
                 {product.name}
             {/if}
-            {#if utype != 'seller'}
+            {#if utype == 'buyer'}
             <iconify-icon   on:click={save}
                             on:keydown
                             icon={`material-symbols:bookmark${isSaved ? "" : "-outline"}-rounded`}/>
-            {:else}
+            {:else if utype == 'seller'}
             <iconify-icon icon="lucide:pencil" on:keydown on:click={() => {
                 if (!editTitle) editTitle = true
                 else {
@@ -248,7 +248,7 @@
             }}/>
             {/if}
         </h1>
-        <p>Offered by @{product.sname}</p>
+        <p>Offered by <a href={`/window?uid=${product.suid}`}>@{product.sname}</a></p>
         <Star stars={+product.rating.toFixed(2)}/>
     </hgroup>
     <vgroup>
@@ -315,7 +315,7 @@
                                 }}/>
                         {/if}
                     </p>
-                    {#if utype != 'seller'}
+                    {#if utype == 'buyer'}
                     <spinner>
                         <span>Count:</span>
                         <iconify-icon 
@@ -327,7 +327,7 @@
                     </spinner>
                     {/if}
                 </hgroup>
-                {#if utype != 'seller'}
+                {#if utype == 'buyer'}
                 <button on:click={addToCart}>
                     Add to Cart
                     <iconify-icon icon="lucide:shopping-cart"/>
@@ -341,7 +341,7 @@
             <h2>Reviews</h2>
             <p>{reviews.length} reviews</p>
         </hgroup>
-        {#if utype != 'seller'}
+        {#if utype == 'buyer'}
         <button on:click={() => open = true}>
             Write a review
         </button>

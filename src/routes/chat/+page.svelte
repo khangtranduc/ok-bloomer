@@ -45,7 +45,9 @@
             </form>
             <scroll>
                 {#each convo as message}
+                {#if message.text != "emptyasdadbbusdbasudasbduah"}
                     <Message suid={message.suid} text={message.text} timeStamp={message.timeStamp}/>
+                {/if}
                 {/each}
             </scroll>
             {/if}

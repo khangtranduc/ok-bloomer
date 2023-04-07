@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
     import { page, updated } from "$app/stores";
     export let data;
     export let form;
@@ -73,7 +74,10 @@
             <p>{threadPost.text}</p>
             <p>
                 <span>{format(threadPost.timeStamp)}</span>
-                <span>@{threadPost.username}</span>
+                <span><a 
+                    href={`/window?uid=${threadPost.uid}`}
+                    on:click={() => goto(`/window?uid=${threadPost.uid}`)}
+                    on:keydown>@{threadPost.username}</a></span>
             </p>
         </div>
         <hr>

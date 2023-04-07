@@ -159,6 +159,13 @@
         </catalog>
     </hgroup>
     {/if}
+    <hr>
+    <form method="POST" action="?/deleteAcc">
+        <button>
+            <iconify-icon icon="lucide:trash-2"/>
+            Delete Account 💀
+        </button>
+    </form>
 </main>
 
 <style lang="scss">
@@ -167,6 +174,21 @@
     }
     .hidden {
         display: none;
+    }
+    main {
+        > form > button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .3rem;
+            background-color: rgb(255, 87, 87);
+            border: none;
+            transition: .3s;
+            &:hover {
+                background-color:rgb(255, 49, 49);
+                transition: .3s;
+            }
+        }   
     }
     header {
         margin-bottom: 1rem;

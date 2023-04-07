@@ -7,7 +7,11 @@
 <hr class:selected>
 <hgroup on:click on:keydown on:mouseenter>
     <h3>{name}</h3>
-    <h4>{last}</h4>
+    {#if last != "emptyasdadbbusdbasudasbduah"}
+        <h4>{last}</h4>
+    {:else}
+        <h4></h4>
+    {/if}
 </hgroup>
 <hr class:selected>
 
