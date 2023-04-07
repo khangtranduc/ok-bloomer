@@ -85,3 +85,9 @@ export type Category = {
     category: string,
     count: number
 }
+
+export type Discount = {
+    name: string;
+    code: string;
+    amount: number;
+}

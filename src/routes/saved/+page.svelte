@@ -16,7 +16,7 @@
 
 <main class="container">
     <hgroup>
-        <h1>Cart</h1>
+        <h1>Saved</h1>
         <h2><i>View your saved products here</i></h2>
     </hgroup>
     <table role="grid">

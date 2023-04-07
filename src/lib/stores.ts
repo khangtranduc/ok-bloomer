@@ -1,5 +1,5 @@
 import { writable, type Writable } from "svelte/store";
-import type { CartItem, Product } from "$lib/types";
+import type { CartItem, Discount, Product } from "$lib/types";
 import { browser } from '$app/environment'
 
 export const products: Writable<Product[]> = writable(fromLocalStorage('products', []));
@@ -10,6 +10,9 @@ toLocalStorage(query, 'query');
 
 export const cart: Writable<CartItem[]> = writable(fromLocalStorage('cart', []));
 toLocalStorage(cart, 'cart');
+
+export const discounts: Writable<Discount[]> = writable(fromLocalStorage('discounts', []));
+toLocalStorage(discounts, 'discounts')
 
 
 //Courtesy of this insane man: https://franknoirot.co/posts/svelte-kit-stores-localstorage

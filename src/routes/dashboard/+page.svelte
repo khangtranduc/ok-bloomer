@@ -1,7 +1,7 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import { page } from "$app/stores";
-    import type { Product, User } from "$lib/types";
+    import type { Discount, Product, User } from "$lib/types";
     import { each } from "svelte/internal";
     import Star from "../search/star.svelte";
     
