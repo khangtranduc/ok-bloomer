@@ -8,7 +8,7 @@
     let selectLabels: string[] = [];
     let searchQuery: string = "";
     let notloggedin = form?.notloggedin;
-    $: re = new RegExp(".*" + searchQuery + ".*", "i");
+    $: re = new RegExp("[a-zA-Z0-9]*" + searchQuery + "[a-zA-Z0-9]*", "i");
 </script>
 
 {#if notloggedin}
@@ -67,9 +67,9 @@
     </vgroup>
     <hr>
     {#each threads as thread}
-        {#if thread.title.match(re)}
+        {#if thread.title.match(re) || !!thread.labels.reduce((acc, cur) => {return cur.match(re) ? `${acc} ${cur}` : acc}, "")}
         <Thread thread_id = {thread.thread_id}
-                title = {thread.title} 
+                title = {thread.title}
                 timeStamp = {thread.timeStamp} 
                 resolved = {thread.resolved}
                 labels = {thread.labels}/>
