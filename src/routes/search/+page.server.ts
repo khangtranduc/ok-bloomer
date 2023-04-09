@@ -9,7 +9,7 @@ export const load = async () => {
 }
 
 const all: Action = async () => {
-  const [rows, _] = await db.execute<RowDataPacket[]>('select product.*, username from product, user where suid = uid limit 20');
+  const [rows, _] = await db.execute<RowDataPacket[]>('select product.*, username from product, user where suid = uid');
   return {
     products: <Product[]> rows
   }

@@ -46,7 +46,7 @@ const edit: Action = async ({ request }) => {
         'static',
         filename
     );
-    
+
     await writeFile(filePath, content);
 
     const imgPath = path.join(
@@ -57,7 +57,8 @@ const edit: Action = async ({ request }) => {
 
     if (typeof image !== 'string') return fail(400, { image: true });
     
-    await writeFile(imgPath, image, 'base64');
+    if (!!image)
+        await writeFile(imgPath, image, 'base64');
 
     throw redirect(302, `/blogpost?bid=${bid}`)
 }

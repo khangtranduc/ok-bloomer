@@ -3,7 +3,8 @@
 	import Quill from "quill";
     import { page } from '$app/stores';
 	let quill:any = null;
-    let image: string;
+    let image: string = "";
+    let tempImg: string;
 
     export let data;
 
@@ -54,6 +55,7 @@
         reader.readAsDataURL(files[0]);
         reader.onload = e => {
             image = (<string> e.target?.result).split(',')[1];
+            tempImg = <string> e.target?.result;
         };
     }
 </script>
@@ -92,8 +94,12 @@
         {/if}
     </vgroup>
     <zgroup class:edit>
-        <img src={blog.thumbnail} alt="" {...{onerror: `this.onerror=null;this.src='${fallback}'`}}/>
-        <input accept="image/png, image/jpeg" type="file" bind:files/>
+        {#if !!image}
+            <img src={tempImg} alt=""/>
+        {:else}
+            <img src={blog.thumbnail} alt="" {...{onerror: `this.onerror=null;this.src='${fallback}'`}}/>
+        {/if}
+        <input accept="image/jpeg" type="file" bind:files/>
     </zgroup>
     {#if content}
         {#if edit}

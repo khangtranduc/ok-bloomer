@@ -63,7 +63,7 @@
                 {/each}
             </select>
             <h3>Amount Payable: ${(sum - sumDis).toFixed(2)}</h3>
-            <button type="submit">Continue check out</button>
+            <button type="submit">Continue checkout</button>
         </form>
     </article>
 </dialog>

@@ -3,7 +3,6 @@
     import Star from './star.svelte';
     import { products, query } from '$lib/stores';
     import Filter from './filter.svelte';
-    import type { Product } from '$lib/types';
 
     export let form;
 
@@ -58,6 +57,10 @@
             </article>
             {/if}
             {/each}
+            <!-- <vgroup>
+                <span><iconify-icon icon="lucide:chevron-left"/></span>
+                <span><iconify-icon icon="lucide:chevron-right"/></span>
+            </vgroup> -->
         </catalog>
     </vgroup>
 </main>
@@ -78,10 +81,6 @@
             align-items: center;
         }
     }
-    hgroup {
-        margin-right: 3rem;
-        border: solid;
-    }
     h4 {
         width: 100%;
         text-align: center;
@@ -98,6 +97,13 @@
         justify-content: space-between;
         padding-right: .5rem;
         padding-left: .5rem;
+        gap: .3rem;
+        span {
+            display: flex;
+            justify-content: center;
+            flex: 1;
+            border: solid;
+        }
     }
     article {
         background-color: $card-bg;
