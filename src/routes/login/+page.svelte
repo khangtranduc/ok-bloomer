@@ -24,7 +24,7 @@
             <input type="password" id="password" name="password" placeholder="••••••••" required>
         </label>
         <button type="submit">Login</button>
-        <a href="/">Forgot password 💀</a>
+        <a href="/forgotpass">Forgot password 💀</a>
     </article>
 </form>
 

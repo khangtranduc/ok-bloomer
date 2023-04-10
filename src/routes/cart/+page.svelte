@@ -1,5 +1,7 @@
 <script lang="ts">
     import { cart, discounts } from '$lib/stores';
+    import { page } from '$app/stores';
+    import type { User } from '$lib/types.js';
 
     export let data;
     export let form;
@@ -18,9 +20,11 @@
     let confirm = false;
     let discount = false;
     let methods = data.methods;
+    let credit = $page.data.user.credit;
     $: sc = $cart.map(x => x.count).reduce((acc, res) => {return acc + res}, 0);
     $: sum = $cart.map(x => x.count * x.price).reduce((acc, res) => {return acc + res}, 0);
     $: sumDis = $discounts.map(x => x.amount).reduce((acc, res) => {return acc + res}, 0);
+    $: credit = $page.data.user.credit - sumDis * 4;
 </script>
 
 {#if form?.noDiscount}
@@ -80,7 +84,9 @@
             <select name="code" required>
                 <option value="" selected>Select a Discount</option>
                 {#each discnts as discnt}
-                    <option value={discnt.code}>{discnt.code} : ${discnt.amount}</option>
+                    {#if credit * 0.25 >= discnt.amount}
+                        <option value={discnt.code}>{discnt.code} : ${discnt.amount}</option>
+                    {/if}
                 {/each}
             </select>
             <button>
@@ -176,6 +182,7 @@
     }
     article {
         padding-bottom: .2rem;
+        min-width: 15rem;
         > form > button {
             margin-top: .3rem;
         } 

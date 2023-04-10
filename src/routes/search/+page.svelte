@@ -57,10 +57,6 @@
             </article>
             {/if}
             {/each}
-            <!-- <vgroup>
-                <span><iconify-icon icon="lucide:chevron-left"/></span>
-                <span><iconify-icon icon="lucide:chevron-right"/></span>
-            </vgroup> -->
         </catalog>
     </vgroup>
 </main>
@@ -82,9 +78,14 @@
         }
     }
     h4 {
+        padding-right: .5rem;
+        padding-left: .5rem;
         width: 100%;
         text-align: center;
         margin-bottom: .3rem;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
     h5 {
         margin-bottom: 0;

@@ -38,7 +38,7 @@
   <ul>
     {#if utype != 'seller' && utype != 'admin'}
     <li>
-      <form action='/search?/search' method='POST'>
+      <form action={`/search?/${!!queryString? 'search' : 'all'}`} method='POST'>
         <input bind:value={queryString} type="search" id="query" name="query" placeholder="Search">
         <button type="submit">
           <span>Go</span>

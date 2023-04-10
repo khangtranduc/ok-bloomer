@@ -7,6 +7,7 @@ export type User = {
     lname: string,
     username: string,
     utype: UTYPE,
+    password: string,
     credit?: number,
     verified?: boolean,
     balance?: number,

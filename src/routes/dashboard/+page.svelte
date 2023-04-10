@@ -1,8 +1,7 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import { page } from "$app/stores";
-    import type { Discount, Product, User } from "$lib/types";
-    import { each } from "svelte/internal";
+    import type { Product, User } from "$lib/types";
     import Star from "../search/star.svelte";
     
     export let data;
@@ -10,6 +9,7 @@
     let user = <User> $page.data.user;
     let products = <Product[]> data.products;
     let categories = <string[]> data.categories;
+    let fav_cats = <string[]> data.fav_cats;
 
     let fallback = '/thumbs/dogtail.png';
 
@@ -124,6 +124,15 @@
             {/each}
         </tbody>
         </table>
+    </hgroup>
+
+    <hr>
+
+    <hgroup>
+        <h2><u>User Statistics</u></h2>
+        {#each fav_cats as cat}
+            {cat}<br>
+        {/each}
     </hgroup>
 
     {#if utype == 'seller'}
