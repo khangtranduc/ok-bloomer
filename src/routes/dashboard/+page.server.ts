@@ -17,15 +17,12 @@ export const load = async ({ locals, cookies }) => {
     `, [uid]);
     const [categories, x] = await db.execute<RowDataPacket[]>(`select distinct category from product`)
     let products: Product[] = [];
-    let fav_cats: string[] = [];
 
     if (rows.length){
         locals.user = <User> rows[0];
         if (locals.user.utype == "buyer") {
             const [rows, _] = await db.execute<RowDataPacket[]>('select * from buyer where buid = ?', [uid]);
             if (rows.length) locals.user.credit = rows[0].credit;
-            const [cats, x] = await db.execute<RowDataPacket[]>('call fav_cat(?)', [uid]);
-            fav_cats = <string[]> cats.map(x => x.category);
         }
         else if (locals.user.utype == "seller"){
             const [rows, _] = await db.execute<RowDataPacket[]>('select * from seller where suid = ?', [uid]);
@@ -45,8 +42,7 @@ export const load = async ({ locals, cookies }) => {
     return {
         user: locals.user,
         products: products,
-        categories: <string[]> categories.map(x => x.category),
-        fav_cats: fav_cats
+        categories: <string[]> categories.map(x => x.category)
     }
 }
 

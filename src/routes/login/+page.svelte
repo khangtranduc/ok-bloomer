@@ -6,6 +6,8 @@
     })
     
     export let form;
+
+    let email = form?.email ?? '';
 </script>
 
 <form method="POST" action="?/login">
@@ -17,14 +19,14 @@
         {#if form?.password}<p>Wrong password!</p>{/if}
         <label for="email">
             Email
-            <input type="text" id="email" name="email" placeholder="elonmusk@gmail.com" value={form?.email ?? ''} required>
+            <input type="text" id="email" name="email" placeholder="elonmusk@gmail.com" bind:value={email} required>
         </label>
         <label for="password">
             Password
             <input type="password" id="password" name="password" placeholder="••••••••" required>
         </label>
         <button type="submit">Login</button>
-        <a href="/forgotpass">Forgot password 💀</a>
+        <a href={`/forgotpass?email=${email}`}>Forgot password 💀</a>
     </article>
 </form>
 

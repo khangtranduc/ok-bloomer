@@ -1,21 +1,21 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { onMount } from 'svelte';
     import Star from '../search/star.svelte';
     export let data;
 
     let user = data.user;
     let products = data.products;
-    let redirect = data.redirect;
 
     let addChat: HTMLFormElement;
     let selectChat: HTMLFormElement;
 
     let fallback = '/thumbs/dogtail.png';
 
-    onMount(() => {
-        if (redirect) selectChat.submit();
-    })
+    let labels = [
+        ['Email', user.email, "email"], 
+        ['Username', user.username, "username"], 
+        ['First Name', user.fname, "fname"], 
+        ['Last Name', user.lname, "lname"]];
 </script>
 
 <form class="hidden" method="POST" action="/chat?/selectChat" bind:this={selectChat}>
@@ -39,6 +39,21 @@
             <iconify-icon icon="lucide:message-circle"/>
         </button>
     </vgroup>
+    <hgroup>
+        <h2><u>Personal Information</u></h2>
+        <table role="grid">
+        <tbody>
+            {#each labels as info, i}
+                <tr>
+                <th scope="row">{info[0]}</th>
+                <td>
+                    {info[1]}
+                </td>
+                </tr>
+            {/each}
+        </tbody>
+        </table>
+    </hgroup>
     {#if user?.utype == 'seller'}
     <hgroup>
         <h2>
@@ -77,6 +92,7 @@
         justify-content: space-between;
         padding-right: .5rem;
         padding-left: .5rem;
+        align-items: center;
     }
     hgroup { 
         margin-bottom: 0;

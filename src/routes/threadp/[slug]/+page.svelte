@@ -61,7 +61,7 @@
         <h2>{format(thread.timeStamp)}</h2>
     </hgroup>
     <hgroup>
-        {#each threadPosts as threadPost}
+        {#each threadPosts as threadPost, i}
         <div class:isOp={isOp && !threadPost.solution} 
              class:isOpSol={isOp && threadPost.solution} 
              class:solution={threadPost.solution} 
@@ -69,7 +69,7 @@
                 post_id = threadPost.post_id;
                 solution = threadPost.solution ? 0 : 1;
              }}
-             on:click={setSolution} 
+             on:click={() => {if (i != 0) setSolution()}} 
              on:keydown>
             <p>{threadPost.text}</p>
             <p>

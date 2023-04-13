@@ -6,9 +6,10 @@ import type { Actions, Action } from "./$types";
 
 export const prerender = false;
 
-export const load = async ({ cookies }) => {
+export const load = async ({ cookies, url }) => {
     const uid  = cookies.get('session');
     if (!uid) throw redirect(302, '/login');
+    const ruid = url.searchParams.get('ruid');
 
     const [rows, _] = await db.execute<RowDataPacket[]>(`
         select uid, email, fname, lname, username, utype, text as last
@@ -33,7 +34,8 @@ export const load = async ({ cookies }) => {
     `, [uid, uid, uid, uid]);
 
     return {
-        contacts: <User[]> rows
+        contacts: <User[]> rows,
+        ruid: ruid
     }
 }
 

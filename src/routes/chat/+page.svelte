@@ -1,25 +1,23 @@
 <script lang="ts">
     import Contact from "./contact.svelte";
     import Message from "./message.svelte";
+    import { onMount } from "svelte";
 
     export let data;
     export let form;
 
     let contacts = data.contacts;
+    let select: HTMLFormElement;
 
     let selected = form?.ruid ?? -1;
-    //TODO: This hoverer updates too slow
-    let hoverer = -1;
+    let hoverer = data.ruid ?? -1;
 
     let convo = form?.convo ?? [];
 
-    const submitForm = () => {
-        let form = <HTMLFormElement> document.getElementById('select');
-        form?.submit();
-    }
+    onMount(() => {if (data.ruid) select.submit()});
 </script>
 
-<form style="display: none" id="select" method="POST" action="?/selectChat">
+<form style="display: none" id="select" method="POST" action="?/selectChat" bind:this={select}>
     <input type="hidden" name="selectChat" id="selectChat" value={hoverer}/>
 </form>
 
@@ -27,7 +25,7 @@
     <vgroup>
         <hgroup>
             {#each contacts as contact}
-                <Contact on:mouseenter={() => hoverer = contact.uid} on:click={() => {selected = contact.uid; submitForm()}}
+                <Contact on:mouseenter={() => hoverer = contact.uid} on:click={() => {selected = contact.uid; select.submit()}}
                     name = {contact.fname.concat(" ", contact.lname)}
                     last = {contact.last ?? "No messages sent yet"}
                     selected = {selected == contact.uid}/>

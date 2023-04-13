@@ -9,7 +9,6 @@
     let user = <User> $page.data.user;
     let products = <Product[]> data.products;
     let categories = <string[]> data.categories;
-    let fav_cats = <string[]> data.fav_cats;
 
     let fallback = '/thumbs/dogtail.png';
 
@@ -124,15 +123,6 @@
             {/each}
         </tbody>
         </table>
-    </hgroup>
-
-    <hr>
-
-    <hgroup>
-        <h2><u>User Statistics</u></h2>
-        {#each fav_cats as cat}
-            {cat}<br>
-        {/each}
     </hgroup>
 
     {#if utype == 'seller'}

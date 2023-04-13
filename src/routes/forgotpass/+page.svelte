@@ -1,14 +1,14 @@
+<script lang="ts">
+    export let data;
+</script>
+
 <form method="POST" action="?/reset">
     <article class="container">
         <h1>Login</h1>
         <hr>
         <label for="email">
             Email
-            <input type="text" name="email" placeholder="elonmusk@gmail.com" required>
-        </label>
-        <label for="old">
-            Old Password
-            <input type="password" name="old" placeholder="••••••••" required>
+            <input type="text" name="email" placeholder="elonmusk@gmail.com" value={data.email ?? ""} required>
         </label>
         <label for="new">
             New Password

@@ -5,9 +5,11 @@ import type { RowDataPacket } from 'mysql2/promise';
 
 export const prerender = false;
 
-export const load = async ({ url }) => {
+export const load = async ({ url, cookies }) => {
     const uid = url.searchParams.get('uid');
-    const redir = url.searchParams.get('redirect');
+    const uuid = cookies.get('session');
+
+    if (uid == uuid) throw redirect(302, '/dashboard');
 
     const [rows, _] = await db.execute<RowDataPacket[]>(`
         select *,
@@ -34,24 +36,32 @@ export const load = async ({ url }) => {
 
     return {
         user: user,
-        products: products,
-        redirect: redir
+        products: products
     }
 }
 
-const addChat: Action = async ({ request, cookies }) => {
+const addChat: Action = async ({ request, cookies, fetch }) => {
     const data = await request.formData();
     const ruid = data.get('ruid');
     const suid = cookies.get('session');
 
     if (typeof ruid !== 'string' || !ruid) return fail(400, { error: true });
 
-    await db.execute(`
-        insert into message (suid, ruid, text) values
-        (?, ?, "emptyasdadbbusdbasudasbduah")
-    `, [suid, ruid]);
+    const [rows, _] = await db.execute<RowDataPacket[]>(`
+        select *
+        from message
+        where (suid = ? and ruid = ?) or (suid = ? and ruid = ?)
+        limit 1
+    `, [suid, ruid, ruid, suid]);
 
-    throw redirect(302, `/window?uid=${ruid}&redirect=1`);
+    if (!rows.length) {
+        await db.execute(`
+            insert into message (suid, ruid, text) values
+            (?, ?, "emptyasdadbbusdbasudasbduah")
+        `, [suid, ruid]);
+    }
+
+    throw redirect(302, `/chat?ruid=${ruid}`)
 }
 
 export const actions: Actions = { addChat }

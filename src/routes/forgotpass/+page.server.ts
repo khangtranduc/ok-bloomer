@@ -6,10 +6,16 @@ import type { RowDataPacket } from "mysql2/promise";
 
 export const prerender = false;
 
+export const load = async({ url }) => {
+    const email = url.searchParams.get('email');
+    return {
+        email: email
+    }
+}
+
 const reset: Action = async ({ request }) => {
     const data = await request.formData();
     const email = data.get('email');
-    const old = data.get('old');
     const newpass = data.get('new');
     const confirm = data.get('confirm');
 
@@ -23,15 +29,11 @@ const reset: Action = async ({ request }) => {
 
     const user = <User> rows[0];
 
-    if (typeof old !== 'string'
-        || typeof newpass !== 'string'
+    if (typeof newpass !== 'string'
         || typeof confirm !== 'string'
-        || !old
         || !newpass
         || !confirm
     ) return fail(400, { neverHappen: true });
-
-    if (!await bcrypt.compare(old, user.password)) return fail(400, { password: true });
 
     if (newpass !== confirm) return fail(400, { mismatch: true });
 
