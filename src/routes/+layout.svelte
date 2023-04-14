@@ -4,13 +4,12 @@
   import Darkmode from "./darkmode.svelte";
   import { goto } from "$app/navigation";
   import { page } from '$app/stores';
-  import { query } from '$lib/stores';
+  import { isOpen, query } from '$lib/stores';
+  import { slide, fade } from 'svelte/transition';
 
   let user = $page.data.user;
   $: queryString = $query;
   $: utype = user?.utype;
-
-  let isOpen = false;
 
   function submit_form(name: string){
     let form = <HTMLFormElement>document.getElementById(name)
@@ -23,10 +22,9 @@
     <li><img src="/logo.jpg" alt="" class="logo"/></li>
     <li><strong>OK, Bloomer</strong></li>
   </ul>
-  <ul class:isOpen>
+  <ul>
     <li><a href="/">Home</a></li>
     <li><a href="/about">About</a></li>
-    <!-- <li><a href="/contact">Contact</a></li> -->
     <li><a href="/thread">Threads</a></li>
     <li><a href="/blog">Blogs</a></li>
     {#if utype == 'buyer'}
@@ -80,22 +78,36 @@
     <li style="padding: 0 1rem 0 1rem;"><Darkmode/></li>
   </ul>
   <ul>
-    <iconify-icon role="button" icon="lucide:menu" on:click={() => isOpen = !isOpen} on:keydown/>
+    <iconify-icon role="button" icon="lucide:menu" on:click={() => $isOpen = !$isOpen} on:keydown/>
   </ul>
 </nav>
 
-<!-- TODO: Do something here -->
-<div class:isOpen>
-  <form action='/search?/search' method='POST'>
-    <input type="search" id="search" name="search" placeholder="Search">
-  </form>
-  <a role="button" href="/">Home</a>
-  <a role="button" href="/about">About</a>
-  <a role="button" href="/contact">Contact</a>
-  <a role="button" href="/thread">Threads</a>
-</div>
-
 <slot />
+
+{#if $isOpen}
+<aside in:slide="{{ duration: 200 }}" out:slide="{{ duration: 200 }}">
+  <nav>
+      <ol>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/thread">Thread</a></li>
+          <li><a href="/blog">Blog</a></li>
+          {#if utype == 'buyer'}
+          <li><a href="/saved">Saved</a></li>
+          {:else if utype == 'admin'}
+          <li><a href="/aspace">Admin Space</a></li>
+          {/if}
+          <hr>
+          <li>
+              <form action={`/search?/${!!queryString? 'search' : 'all'}`} method='POST'>
+                  <input bind:value={queryString} type="search" id="query" name="query" placeholder="Search">
+              </form>
+          </li>
+      </ol>
+  </nav>
+</aside>
+<gray transition:fade="{{ duration: 200 }}"/>
+{/if}
 
 <style lang="scss">
   a[href='/aspace'] {
@@ -160,6 +172,43 @@
       }
       
     }
+  }
+
+  gray {
+      position: absolute;
+      width: 100%;
+      height: 90%;
+      top: 10%;
+      background-color: gray;
+      filter: opacity(.4);
+  }
+
+  aside {
+      position: absolute;
+      top: 8%;
+      width: 100%;
+      background-color:white;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      margin: 0;
+      z-index: 1;
+      li {
+          padding: 0;
+          >form {
+                padding: 0;
+                margin: 0;
+                margin-top: .3rem;
+                display: flex;
+                justify-content: center;
+                input {
+                    margin: 0;
+                    width: 80%;
+                }
+          }
+          a {
+              text-align: center;
+          }
+      }
   }
 
   div {

@@ -14,6 +14,7 @@ toLocalStorage(cart, 'cart');
 export const discounts: Writable<Discount[]> = writable(fromLocalStorage('discounts', []));
 toLocalStorage(discounts, 'discounts')
 
+export const isOpen = writable(false);
 
 //Courtesy of this insane man: https://franknoirot.co/posts/svelte-kit-stores-localstorage
 function fromLocalStorage(storageKey: string, fallbackValue: any) {
