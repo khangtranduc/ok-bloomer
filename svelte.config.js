@@ -16,11 +16,12 @@ const config = {
   ],
 
   kit: {
-    adapter: adapter({
-      pages: "docs",
-      assets: "docs",
-      fallback: "200.html"
-    })
+    adapter: node({ env: { port: process|.env.PORT } })
+    // adapter: adapter({
+    //   pages: "docs",
+    //   assets: "docs",
+    //   fallback: "200.html"
+    // })
   },
 };
 
