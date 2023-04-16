@@ -1,0 +1,1 @@
+:root{--filter-img:blur(5px);--star-col:#99ff99}:root[data-theme=dark]{--star-col:#689f38;--filter-img:blur(5px) grayscale(100%);--filter-text:grayscale(100%);--card-bg:rgb(42, 42, 42)}mark.svelte-1tz944h{background-color:#adff2f;border-radius:5px;margin-right:.3rem}div.svelte-1tz944h{display:flex;align-items:center}

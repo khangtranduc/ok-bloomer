@@ -2,6 +2,10 @@
   "name": "ok-bloomer",
   "version": "0.0.1",
   "private": true,
+  "engines": {    
+    "node": "18.x",
+    "npm": "8.x"
+  },
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
@@ -10,7 +14,8 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "eslint .",
     "surge": "surge D:/CS/Projects/Web/Svelte/ok-bloomer/docs okbloomer.surge.sh",
-    "push": "npm run build && npm run surge"
+    "push": "npm run build && npm run surge",
+    "start": "node build/index.js"
   },
   "devDependencies": {
     "@sveltejs/kit": "^1.0.0",
