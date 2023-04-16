@@ -32,6 +32,7 @@
   "dependencies": {
     "@picocss/pico": "^1.5.6",
     "@sveltejs/adapter-static": "^1.0.0",
+    "@sveltejs/adapter-vercel": "^2.4.1",
     "bcrypt": "^5.1.0",
     "iconify-icon": "^1.0.2",
     "mysql2": "^3.2.0",
