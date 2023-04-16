@@ -6,12 +6,14 @@ import { vitePreprocess } from "@sveltejs/kit/vite";
 const config = {
   // Consult https://kit.svelte.dev/docs/integrations#preprocessors
   // for more information about preprocessors
-  preprocess: 
+  preprocess: [
+    vitePreprocess(),
     preprocess({
       scss: {
         prependData: '@use "src/variables.scss" as *;',
       },
     }),
+  ],
 
   kit: {
     adapter: node({ env: { port: process.env.PORT } })
