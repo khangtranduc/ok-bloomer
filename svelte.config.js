@@ -16,7 +16,7 @@ const config = {
   ],
 
   kit: {
-    adapter: node({ env: { port: process|.env.PORT } })
+    adapter: node({ env: { port: process.env.PORT } })
     // adapter: adapter({
     //   pages: "docs",
     //   assets: "docs",
