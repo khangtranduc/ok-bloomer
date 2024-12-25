@@ -1,7 +1,11 @@
 {
-  "name": "james-bong-pico",
+  "name": "ok-bloomer",
   "version": "0.0.1",
   "private": true,
+  "engines": {    
+    "node": "18.x",
+    "npm": "8.x"
+  },
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
@@ -10,26 +14,32 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "eslint .",
     "surge": "surge D:/CS/Projects/Web/Svelte/ok-bloomer/docs okbloomer.surge.sh",
-    "push": "npm run build && npm run surge"
+    "push": "npm run build && npm run surge",
+    "start": "node build/index.js"
   },
   "devDependencies": {
     "@sveltejs/kit": "^1.0.0",
+    "@types/bcrypt": "^5.0.0",
+    "@types/quill": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.45.0",
     "eslint": "^8.28.0",
     "eslint-plugin-svelte3": "^4.0.0",
+    "sass": "^1.53.0",
     "svelte": "^3.54.0",
     "svelte-check": "^2.9.2",
+    "svelte-preprocess": "^4.10.7",
     "tslib": "^2.4.1",
     "typescript": "^4.9.3",
-    "vite": "^4.0.0",
-    "sass": "^1.53.0",
-    "svelte-preprocess": "^4.10.7"
+    "vite": "^4.0.0"
   },
   "type": "module",
   "dependencies": {
     "@picocss/pico": "^1.5.6",
     "@sveltejs/adapter-static": "^1.0.0",
-    "iconify-icon": "^1.0.2"
+    "bcrypt": "^5.1.0",
+    "iconify-icon": "^1.0.2",
+    "mysql2": "^3.2.0",
+    "quill": "^1.3.7"
   }
 }

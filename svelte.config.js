@@ -1,5 +1,5 @@
 import preprocess from "svelte-preprocess";
-import adapter from "@sveltejs/adapter-static";
+import node from "@sveltejs/adapter-node";
 import { vitePreprocess } from "@sveltejs/kit/vite";
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -16,14 +16,12 @@ const config = {
   ],
 
   kit: {
-    adapter: adapter({
-      pages: "docs",
-      assets: "docs",
-      fallback: "200.html"
-    }),
-    alias: {
-      '$store': 'src/routes/store.ts'
-    }
+    adapter: node({ env: { port: process.env.PORT } })
+    // adapter: adapter({
+    //   pages: "docs",
+    //   assets: "docs",
+    //   fallback: "200.html"
+    // })
   },
 };
 

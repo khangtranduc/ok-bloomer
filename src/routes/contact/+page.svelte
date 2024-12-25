@@ -39,7 +39,7 @@
     }
     textarea{
         resize: vertical;
-        max-height: 10rem;
+        min-height: 10rem;
     }
 
     h1 {

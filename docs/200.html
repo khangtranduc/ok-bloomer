@@ -10,21 +10,30 @@
 		<title>OK, Bloomer!</title>
 		<script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
 		<meta http-equiv="content-security-policy" content="">
-		<link rel="modulepreload" href="/_app/immutable/start-9660f683.js">
-		<link rel="modulepreload" href="/_app/immutable/chunks/index-feba7eca.js">
-		<link rel="modulepreload" href="/_app/immutable/chunks/singletons-4efd1141.js">
+		<link rel="modulepreload" href="/_app/immutable/entry/start.30606e1d.js">
+		<link rel="modulepreload" href="/_app/immutable/chunks/index.708f7bdc.js">
+		<link rel="modulepreload" href="/_app/immutable/chunks/singletons.8200a537.js">
+		<link rel="modulepreload" href="/_app/immutable/chunks/control.e7f5239e.js">
+		<link rel="modulepreload" href="/_app/immutable/entry/app.2dce8aec.js">
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">
-		<script type="module" data-sveltekit-hydrate="45h">
-			import { start } from "/_app/immutable/start-9660f683.js";
+			<script>
+				{
+					__sveltekit_xsj507 = {
+						env: {},
+						base: "",
+						element: document.currentScript.parentElement
+					};
 
-			start({
-				env: {},
-				paths: {"base":"","assets":""},
-				target: document.querySelector('[data-sveltekit-hydrate="45h"]').parentNode,
-				version: "1673697494717"
-			});
-		</script></div>
+					Promise.all([
+						import("/_app/immutable/entry/start.30606e1d.js"),
+						import("/_app/immutable/entry/app.2dce8aec.js")
+					]).then(([kit, app]) => {
+						kit.start(app, __sveltekit_xsj507.element);
+					});
+				}
+			</script>
+		</div>
 	</body>
 </html>
