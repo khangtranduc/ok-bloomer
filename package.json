@@ -2,7 +2,7 @@
   "name": "ok-bloomer",
   "version": "0.0.1",
   "private": true,
-  "engines": {    
+  "engines": {
     "node": "18.x",
     "npm": "8.x"
   },
@@ -36,6 +36,7 @@
   "type": "module",
   "dependencies": {
     "@picocss/pico": "^1.5.6",
+    "@sveltejs/adapter-node": "^5.3.2",
     "@sveltejs/adapter-static": "^1.0.0",
     "bcrypt": "^5.1.0",
     "iconify-icon": "^1.0.2",
